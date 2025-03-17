@@ -1,5 +1,6 @@
 package br.gov.sp.cps.api.pixel.core.domain.entity;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarPlantacaoCommand;
 import br.gov.sp.cps.api.pixel.core.domain.enumeration.StatusPlantacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -55,5 +56,10 @@ public class Plantacao {
         this.tipoSolo = tipoSolo;
         this.dataPlantio = dataPlantio;
         this.status = status;
+    }
+
+    public static Plantacao toEntity(Fazenda fazenda, Especie especie, CadastrarPlantacaoCommand command) {
+        return new Plantacao(fazenda, especie, command.areaPlantada(), command.tipoSolo(),
+                LocalDateTime.now(), command.status());
     }
 }

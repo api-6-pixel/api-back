@@ -1,5 +1,6 @@
 package br.gov.sp.cps.api.pixel.core.domain.entity;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarEspecieCommand;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,5 +33,9 @@ public class Especie {
     public Especie(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
+    }
+
+    public static Especie toEntity(CadastrarEspecieCommand command){
+        return new Especie(command.nome(), command.descricao());
     }
 }

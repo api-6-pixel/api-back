@@ -1,5 +1,6 @@
 package br.gov.sp.cps.api.pixel.core.domain.entity;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarFazendaCommand;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,5 +42,9 @@ public class Fazenda {
         this.localizacao = localizacao;
         this.areaTotal = areaTotal;
         this.dataCriacao = dataCriacao;
+    }
+
+    public static Fazenda toEntity(CadastrarFazendaCommand command) {
+        return new Fazenda(command.nome(), command.localizacao(), command.areaTotal(), LocalDateTime.now());
     }
 }
