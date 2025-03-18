@@ -41,9 +41,6 @@ public class AtualizacaoPlantio {
     @Column(name = "atualizacao_ph_solo", nullable = false)
     private Double phSolo;
 
-    @Column(name = "atualizacao_precipitacao", nullable = false)
-    private Double precipitacao;
-
     @Column(name = "atualizacao_indice_uv", nullable = false)
     private Double indiceUV;
 
@@ -51,15 +48,14 @@ public class AtualizacaoPlantio {
     private LocalDateTime dataRegistro;
 
     public AtualizacaoPlantio(Plantacao plantacao, Double temperaturaAmbiente, Double temperaturaSolo,
-                              Double umidadeAmbiente, Double umidadeSolo, Double phSolo, Double precipitacao,
-                              Double indiceUV, LocalDateTime dataRegistro) {
+                              Double umidadeAmbiente, Double umidadeSolo, Double phSolo, Double indiceUV,
+                              LocalDateTime dataRegistro) {
         this.plantacao = plantacao;
         this.temperaturaAmbiente = temperaturaAmbiente;
         this.temperaturaSolo = temperaturaSolo;
         this.umidadeAmbiente = umidadeAmbiente;
         this.umidadeSolo = umidadeSolo;
         this.phSolo = phSolo;
-        this.precipitacao = precipitacao;
         this.indiceUV = indiceUV;
         this.dataRegistro = dataRegistro;
     }
@@ -67,7 +63,7 @@ public class AtualizacaoPlantio {
     public static AtualizacaoPlantio toEntity(Plantacao plantacao,
                                               CadastrarAtualizacaoPlantioCommand command){
         return new AtualizacaoPlantio(plantacao, command.temperaturaAmbiente(), command.temperaturaSolo(),
-                command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.precipitacao(),
-                command.indiceUV(), LocalDateTime.now());
+                command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.indiceUV(),
+                LocalDateTime.now());
     }
 }

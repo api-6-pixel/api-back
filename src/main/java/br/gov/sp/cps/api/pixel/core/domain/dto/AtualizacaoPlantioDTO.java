@@ -10,7 +10,6 @@ public record AtualizacaoPlantioDTO(
         Double umidadeAmbiente,
         Double umidadeSolo,
         Double phSolo,
-        Double precipitacao,
         Double indiceUV,
         LocalDateTime dataRegistro) {
 }

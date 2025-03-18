@@ -7,7 +7,6 @@ public record CadastrarAtualizacaoPlantioCommand(
         Double umidadeAmbiente,
         Double umidadeSolo,
         Double phSolo,
-        Double precipitacao,
         Double indiceUV) {
 
     public static CadastrarAtualizacaoPlantioCommand toCommand(Long plantacaoId,
@@ -16,9 +15,8 @@ public record CadastrarAtualizacaoPlantioCommand(
                                                         Double umidadeAmbiente,
                                                         Double umidadeSolo,
                                                         Double phSolo,
-                                                        Double precipitacao,
                                                         Double indiceUV){
         return new CadastrarAtualizacaoPlantioCommand(plantacaoId, temperaturaAmbiente, temperaturaSolo,
-                umidadeAmbiente, umidadeSolo, phSolo, precipitacao, indiceUV);
+                umidadeAmbiente, umidadeSolo, phSolo, indiceUV);
     }
 }
