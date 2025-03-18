@@ -35,8 +35,7 @@ public class CadastrarPlantacaoUC {
 
         cadastrarAtualizacaoPlantioUC.executar(CadastrarAtualizacaoPlantioCommand
                 .toCommand(plantacao.getId(), command.temperaturaAmbiente(), command.temperaturaSolo(),
-                        command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.precipitacao(),
-                        command.indiceUV()));
+                        command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.indiceUV()));
 
         return PlantacaoMapper.INSTANCE.toDTO(resultado);
     }
