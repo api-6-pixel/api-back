@@ -7,5 +7,12 @@ public record CadastrarPlantacaoCommand(
         Long especieId,
         Double areaPlantada,
         String tipoSolo,
-        StatusPlantacao status) {
+        StatusPlantacao status,
+        Long plantacaoId,
+        Double temperaturaAmbiente,
+        Double temperaturaSolo,
+        Double umidadeAmbiente,
+        Double umidadeSolo,
+        Double phSolo,
+        Double indiceUV) {
 }
