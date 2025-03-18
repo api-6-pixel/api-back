@@ -1,5 +1,6 @@
 package br.gov.sp.cps.api.pixel.core.domain.entity;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarAtualizacaoPlantioCommand;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -61,5 +62,12 @@ public class AtualizacaoPlantio {
         this.precipitacao = precipitacao;
         this.indiceUV = indiceUV;
         this.dataRegistro = dataRegistro;
+    }
+
+    public static AtualizacaoPlantio toEntity(Plantacao plantacao,
+                                              CadastrarAtualizacaoPlantioCommand command){
+        return new AtualizacaoPlantio(plantacao, command.temperaturaAmbiente(), command.temperaturaSolo(),
+                command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.precipitacao(),
+                command.indiceUV(), LocalDateTime.now());
     }
 }
