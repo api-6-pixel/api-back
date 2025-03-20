@@ -9,8 +9,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface AtualizacaoPlantioMapper {
-    AtualizacaoPlantioMapper INSTANCE = Mappers.getMapper(AtualizacaoPlantioMapper.class);
-
     @Mapping(source = "plantacao.id", target = "plantacaoId")
     AtualizacaoPlantioDTO toDTO(AtualizacaoPlantio atualizacaoPlantio);
 }

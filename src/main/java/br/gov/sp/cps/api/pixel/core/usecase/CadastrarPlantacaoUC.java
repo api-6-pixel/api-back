@@ -22,6 +22,7 @@ public class CadastrarPlantacaoUC {
     private final FazendaRepository fazendaRepository;
     private final EspecieRepository especieRepository;
     private final CadastrarAtualizacaoPlantioUC cadastrarAtualizacaoPlantioUC;
+    private final PlantacaoMapper mapper;
 
     @Transactional
     public PlantacaoDTO executar(CadastrarPlantacaoCommand command) {
@@ -37,6 +38,6 @@ public class CadastrarPlantacaoUC {
                 .toCommand(plantacao.getId(), command.temperaturaAmbiente(), command.temperaturaSolo(),
                         command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.indiceUV()));
 
-        return PlantacaoMapper.INSTANCE.toDTO(resultado);
+        return mapper.toDTO(resultado);
     }
 }

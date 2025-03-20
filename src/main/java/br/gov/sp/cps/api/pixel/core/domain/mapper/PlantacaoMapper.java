@@ -8,7 +8,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface PlantacaoMapper {
-    PlantacaoMapper INSTANCE = Mappers.getMapper(PlantacaoMapper.class);
 
     @Mapping(source = "fazenda.id", target = "fazendaId")
     @Mapping(source = "especie.id", target = "especieId")

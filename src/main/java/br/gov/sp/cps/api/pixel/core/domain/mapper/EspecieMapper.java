@@ -7,7 +7,5 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface EspecieMapper {
-    EspecieMapper INSTANCE = Mappers.getMapper(EspecieMapper.class);
-
     EspecieDTO toDto(Especie especie);
 }
