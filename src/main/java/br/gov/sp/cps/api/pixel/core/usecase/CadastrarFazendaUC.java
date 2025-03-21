@@ -14,11 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class CadastrarFazendaUC {
 
     private final FazendaRepository fazendaRepository;
+    private final FazendaMapper fazendaMapper;
 
     @Transactional
     public FazendaDTO executar(CadastrarFazendaCommand command){
         Fazenda fazenda = Fazenda.toEntity(command);
         Fazenda resultado = fazendaRepository.salvar(fazenda);
-        return FazendaMapper.INSTANCE.toDTO(resultado);
+        return fazendaMapper.toDTO(resultado);
     }
 }

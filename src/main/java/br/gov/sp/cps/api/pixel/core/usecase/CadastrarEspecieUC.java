@@ -14,11 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class CadastrarEspecieUC {
 
     private final EspecieRepository especieRepository;
+    private final EspecieMapper especieMapper;
 
     @Transactional
     public EspecieDTO executar(CadastrarEspecieCommand command){
         Especie especie = Especie.toEntity(command);
         Especie resultado = especieRepository.salvar(especie);
-        return EspecieMapper.INSTANCE.toDto(resultado);
+        return especieMapper.toDto(resultado);
     }
 }

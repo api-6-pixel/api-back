@@ -17,6 +17,7 @@ public class CadastrarAtualizacaoPlantioUC {
 
     private final AtualizacaoPlantioRepository atualizacaoPlantioRepository;
     private final PlantacaoRepository plantacaoRepository;
+    private final AtualizacaoPlantioMapper mapper;
 
     @Transactional
     public AtualizacaoPlantioDTO executar(CadastrarAtualizacaoPlantioCommand command){
@@ -26,6 +27,6 @@ public class CadastrarAtualizacaoPlantioUC {
         AtualizacaoPlantio atualizacaoPlantio = AtualizacaoPlantio.toEntity(plantacao, command);
         AtualizacaoPlantio resultado = atualizacaoPlantioRepository.salvar(atualizacaoPlantio);
 
-        return AtualizacaoPlantioMapper.INSTANCE.toDTO(resultado);
+        return mapper.toDTO(resultado);
     }
 }
