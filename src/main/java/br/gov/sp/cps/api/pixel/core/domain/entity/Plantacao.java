@@ -40,6 +40,9 @@ public class Plantacao {
     @Column(name = "plantacao_data", nullable = false)
     private LocalDateTime dataPlantio;
 
+    @Column(name = "plantacao_custo", nullable = false)
+    private Double custoEsperado;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "plantacao_status", nullable = false)
     private StatusPlantacao status;
@@ -49,17 +52,19 @@ public class Plantacao {
                      Double areaPlantada,
                      String tipoSolo,
                      LocalDateTime dataPlantio,
+                     Double custoEsperado,
                      StatusPlantacao status){
         this.fazenda = fazenda;
         this.especie = especie;
         this.areaPlantada = areaPlantada;
         this.tipoSolo = tipoSolo;
         this.dataPlantio = dataPlantio;
+        this.custoEsperado = custoEsperado;
         this.status = status;
     }
 
     public static Plantacao toEntity(Fazenda fazenda, Especie especie, CadastrarPlantacaoCommand command) {
         return new Plantacao(fazenda, especie, command.areaPlantada(), command.tipoSolo(),
-                LocalDateTime.now(), command.status());
+                LocalDateTime.now(), command.custoEsperado(), command.status());
     }
 }

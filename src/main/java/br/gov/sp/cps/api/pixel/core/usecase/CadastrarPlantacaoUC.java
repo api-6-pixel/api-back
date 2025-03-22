@@ -26,9 +26,9 @@ public class CadastrarPlantacaoUC {
 
     @Transactional
     public PlantacaoDTO executar(CadastrarPlantacaoCommand command) {
-        Fazenda fazenda = fazendaRepository.buscarPorId(command.fazendaId())
+        Fazenda fazenda = fazendaRepository.buscarPorNome(command.fazendaNome())
                 .orElseThrow(() -> new IllegalArgumentException("Fazenda não encontrada"));
-        Especie especie = especieRepository.buscarPorId(command.especieId())
+        Especie especie = especieRepository.buscarPorNome(command.especieNome())
                 .orElseThrow(() -> new IllegalArgumentException("Espécie não encontrada"));
 
         Plantacao plantacao = Plantacao.toEntity(fazenda, especie, command);
