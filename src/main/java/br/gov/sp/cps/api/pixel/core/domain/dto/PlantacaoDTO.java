@@ -9,7 +9,6 @@ public record PlantacaoDTO(
         String fazendaNome,
         String especieNome,
         Double areaPlantada,
-        String tipoSolo,
         LocalDateTime dataPlantio,
         Double custoEsperado,
         StatusPlantacao status) {

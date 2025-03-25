@@ -32,9 +32,6 @@ public class Plantacao {
     @Column(name = "plantacao_area", nullable = false)
     private Double areaPlantada;
 
-    @Column(name = "plantacao_solo", nullable = false)
-    private String tipoSolo;
-
     @Column(name = "plantacao_data", nullable = false)
     private LocalDateTime dataPlantio;
 
@@ -48,21 +45,19 @@ public class Plantacao {
     public Plantacao(String fazendaNome,
                      String especieNome,
                      Double areaPlantada,
-                     String tipoSolo,
                      LocalDateTime dataPlantio,
                      Double custoEsperado,
                      StatusPlantacao status){
         this.fazendaNome = fazendaNome;
         this.especieNome = especieNome;
         this.areaPlantada = areaPlantada;
-        this.tipoSolo = tipoSolo;
         this.dataPlantio = dataPlantio;
         this.custoEsperado = custoEsperado;
         this.status = status;
     }
 
     public static Plantacao toEntity(CadastrarPlantacaoCommand command) {
-        return new Plantacao(command.fazendaNome(), command.especieNome(), command.areaPlantada(), command.tipoSolo(),
+        return new Plantacao(command.fazendaNome(), command.especieNome(), command.areaPlantada(),
                 LocalDateTime.now(), command.custoEsperado(), command.status());
     }
 }

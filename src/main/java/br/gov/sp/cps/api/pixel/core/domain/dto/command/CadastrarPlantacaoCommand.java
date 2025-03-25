@@ -6,7 +6,6 @@ public record CadastrarPlantacaoCommand(
         String fazendaNome,
         String especieNome,
         Double areaPlantada,
-        String tipoSolo,
         Double custoEsperado,
         StatusPlantacao status,
         Double temperaturaAmbiente,
