@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface PlantacaoRepository {
     Plantacao salvar(Plantacao plantacao);
     Optional<Plantacao> buscarPorId(Long id);
+    Optional<Plantacao> buscarPorFazenda(String fazenda);
 }

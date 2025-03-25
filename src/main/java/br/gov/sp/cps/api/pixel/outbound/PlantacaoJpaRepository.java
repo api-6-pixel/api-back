@@ -14,4 +14,10 @@ public interface PlantacaoJpaRepository extends JpaRepository<Plantacao, Long>, 
     default Optional<Plantacao> buscarPorId(Long id) {
         return findById(id);
     }
+
+    default Optional<Plantacao> buscarPorFazenda(String nomeFazenda) {
+        return findByFazendaNome(nomeFazenda);
+    }
+
+    Optional<Plantacao> findByFazendaNome(String fazenda);
 }

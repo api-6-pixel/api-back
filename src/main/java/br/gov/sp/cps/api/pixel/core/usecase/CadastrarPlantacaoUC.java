@@ -26,16 +26,11 @@ public class CadastrarPlantacaoUC {
 
     @Transactional
     public PlantacaoDTO executar(CadastrarPlantacaoCommand command) {
-        Fazenda fazenda = fazendaRepository.buscarPorNome(command.fazendaNome())
-                .orElseThrow(() -> new IllegalArgumentException("Fazenda não encontrada"));
-        Especie especie = especieRepository.buscarPorNome(command.especieNome())
-                .orElseThrow(() -> new IllegalArgumentException("Espécie não encontrada"));
-
-        Plantacao plantacao = Plantacao.toEntity(fazenda, especie, command);
+        Plantacao plantacao = Plantacao.toEntity(command);
         Plantacao resultado = plantacaoRepository.salvar(plantacao);
 
         cadastrarAtualizacaoPlantioUC.executar(CadastrarAtualizacaoPlantioCommand
-                .toCommand(plantacao.getId(), command.temperaturaAmbiente(), command.temperaturaSolo(),
+                .toCommand(plantacao.getId(), command.fazendaNome(), command.temperaturaAmbiente(), command.temperaturaSolo(),
                         command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.indiceUV()));
 
         return mapper.toDTO(resultado);

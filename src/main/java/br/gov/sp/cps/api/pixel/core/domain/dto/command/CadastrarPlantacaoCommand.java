@@ -9,7 +9,6 @@ public record CadastrarPlantacaoCommand(
         String tipoSolo,
         Double custoEsperado,
         StatusPlantacao status,
-        Long plantacaoId,
         Double temperaturaAmbiente,
         Double temperaturaSolo,
         Double umidadeAmbiente,
