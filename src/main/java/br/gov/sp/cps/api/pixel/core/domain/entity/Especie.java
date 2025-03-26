@@ -27,8 +27,10 @@ public class Especie {
     @Column(name = "especie_descricao", nullable = false)
     private String descricao;
 
+    /*
     @OneToMany(mappedBy = "especie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Plantacao> plantacoes;
+     */
 
     public Especie(String nome, String descricao) {
         this.nome = nome;

@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface FazendaRepository {
     Fazenda salvar(Fazenda fazenda);
     Optional<Fazenda> buscarPorId(Long id);
+    Optional<Fazenda> buscarPorNome(String nome);
 }

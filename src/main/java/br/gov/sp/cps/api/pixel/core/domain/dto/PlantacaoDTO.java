@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 
 public record PlantacaoDTO(
         Long id,
-        Long fazendaId,
-        Long especieId,
+        String fazendaNome,
+        String especieNome,
         Double areaPlantada,
-        String tipoSolo,
         LocalDateTime dataPlantio,
+        Double custoEsperado,
         StatusPlantacao status) {
 }
