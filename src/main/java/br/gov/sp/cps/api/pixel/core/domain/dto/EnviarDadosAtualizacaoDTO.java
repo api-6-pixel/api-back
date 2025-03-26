@@ -19,16 +19,18 @@ public class EnviarDadosAtualizacaoDTO {
     private Double umidadeAmbiente;
     private Double indiceUV;
     private Double phSolo;
+    private Double custoEsperado;
 
-    public static EnviarDadosAtualizacaoDTO toDto(AtualizacaoPlantio entity){
+    public static EnviarDadosAtualizacaoDTO toDto(AtualizacaoPlantio entity, Double custoEsperado){
         EnviarDadosAtualizacaoDTO dto = new EnviarDadosAtualizacaoDTO();
-        dto.setFazendaNome(entity.getPlantacao().getFazenda().getNome());
+        dto.setFazendaNome(entity.getPlantacao().getFazendaNome());
         dto.setUmidadeSolo(entity.getUmidadeSolo());
         dto.setTemperaturaAmbiente(entity.getTemperaturaAmbiente());
         dto.setTemperaturaSolo(entity.getTemperaturaSolo());
         dto.setUmidadeAmbiente(entity.getUmidadeAmbiente());
         dto.setIndiceUV(entity.getIndiceUV());
         dto.setPhSolo(entity.getPhSolo());
+        dto.setCustoEsperado(custoEsperado);
         return dto;
     }
 }

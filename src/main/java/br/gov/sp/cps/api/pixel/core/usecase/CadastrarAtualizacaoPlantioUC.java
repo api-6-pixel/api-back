@@ -30,7 +30,7 @@ public class CadastrarAtualizacaoPlantioUC {
         AtualizacaoPlantio atualizacaoPlantio = AtualizacaoPlantio.toEntity(plantacao, command);
         AtualizacaoPlantio resultado = atualizacaoPlantioRepository.salvar(atualizacaoPlantio);
 
-        enviarDadosAtualizacaoRepository.enviar(EnviarDadosAtualizacaoDTO.toDto(resultado));
+        enviarDadosAtualizacaoRepository.enviar(EnviarDadosAtualizacaoDTO.toDto(resultado, command.custoEsperado()));
 
         return mapper.toDTO(resultado);
     }

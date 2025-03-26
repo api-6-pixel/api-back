@@ -8,7 +8,8 @@ public record CadastrarAtualizacaoPlantioCommand(
         Double umidadeAmbiente,
         Double umidadeSolo,
         Double phSolo,
-        Double indiceUV) {
+        Double indiceUV,
+        Double custoEsperado) {
 
     public static CadastrarAtualizacaoPlantioCommand toCommand(Long plantacaoId,
                                                         String fazendaNome,
@@ -17,8 +18,9 @@ public record CadastrarAtualizacaoPlantioCommand(
                                                         Double umidadeAmbiente,
                                                         Double umidadeSolo,
                                                         Double phSolo,
-                                                        Double indiceUV){
+                                                        Double indiceUV,
+                                                        Double custoEsperado){
         return new CadastrarAtualizacaoPlantioCommand(plantacaoId, fazendaNome, temperaturaAmbiente, temperaturaSolo,
-                umidadeAmbiente, umidadeSolo, phSolo, indiceUV);
+                umidadeAmbiente, umidadeSolo, phSolo, indiceUV, custoEsperado);
     }
 }
