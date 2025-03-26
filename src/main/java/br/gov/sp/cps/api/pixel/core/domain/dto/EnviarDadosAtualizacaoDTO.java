@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EnviarDadosAtualizacaoDTO {
 
+    private String fazendaNome;
     private Double umidadeSolo;
     private Double temperaturaAmbiente;
     private Double temperaturaSolo;
@@ -21,6 +22,7 @@ public class EnviarDadosAtualizacaoDTO {
 
     public static EnviarDadosAtualizacaoDTO toDto(AtualizacaoPlantio entity){
         EnviarDadosAtualizacaoDTO dto = new EnviarDadosAtualizacaoDTO();
+        dto.setFazendaNome(entity.getPlantacao().getFazenda().getNome());
         dto.setUmidadeSolo(entity.getUmidadeSolo());
         dto.setTemperaturaAmbiente(entity.getTemperaturaAmbiente());
         dto.setTemperaturaSolo(entity.getTemperaturaSolo());
