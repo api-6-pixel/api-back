@@ -14,4 +14,10 @@ public interface EspecieJpaRepository extends JpaRepository<Especie, Long>, Espe
     default Optional<Especie> buscarPorId(Long id) {
         return findById(id);
     }
+
+    default Optional<Especie> buscarPorNome(String nome) {
+        return findByNome(nome);
+    }
+
+    Optional<Especie> findByNome(String nome);
 }

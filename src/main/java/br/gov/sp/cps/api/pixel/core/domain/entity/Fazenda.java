@@ -34,8 +34,10 @@ public class Fazenda {
     @Column(name = "fazenda_criacao", nullable = false)
     private LocalDateTime dataCriacao;
 
+    /*
     @OneToMany(mappedBy = "fazenda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Plantacao> plantacoes;
+     */
 
     public Fazenda(String nome, String localizacao, Double areaTotal, LocalDateTime dataCriacao) {
         this.nome = nome;

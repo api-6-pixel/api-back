@@ -24,8 +24,8 @@ public class CadastrarAtualizacaoPlantioUC {
 
     @Transactional
     public AtualizacaoPlantioDTO executar(CadastrarAtualizacaoPlantioCommand command){
-        Plantacao plantacao = plantacaoRepository.buscarPorId(command.plantacaoId())
-                .orElseThrow(() -> new IllegalArgumentException("Plantação não encontrada"));
+        Plantacao plantacao = plantacaoRepository.buscarPorFazenda(command.fazendaNome())
+                .orElseThrow(() -> new IllegalArgumentException("Fazenda não encontrada"));
 
         AtualizacaoPlantio atualizacaoPlantio = AtualizacaoPlantio.toEntity(plantacao, command);
         AtualizacaoPlantio resultado = atualizacaoPlantioRepository.salvar(atualizacaoPlantio);

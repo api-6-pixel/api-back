@@ -14,4 +14,10 @@ public interface FazendaJpaRepository extends JpaRepository<Fazenda, Long>, Faze
     default Optional<Fazenda> buscarPorId(Long id){
         return findById(id);
     }
+
+    default Optional<Fazenda> buscarPorNome(String nome){
+        return findByNome(nome);
+    }
+
+    Optional<Fazenda> findByNome(String nome);
 }
