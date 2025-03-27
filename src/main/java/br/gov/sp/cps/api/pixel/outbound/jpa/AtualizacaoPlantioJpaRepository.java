@@ -1,4 +1,4 @@
-package br.gov.sp.cps.api.pixel.outbound;
+package br.gov.sp.cps.api.pixel.outbound.jpa;
 
 import br.gov.sp.cps.api.pixel.core.domain.entity.AtualizacaoPlantio;
 import br.gov.sp.cps.api.pixel.core.domain.repository.AtualizacaoPlantioRepository;

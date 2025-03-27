@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CadastrarPlantacaoUC {
@@ -26,13 +28,17 @@ public class CadastrarPlantacaoUC {
 
     @Transactional
     public PlantacaoDTO executar(CadastrarPlantacaoCommand command) {
-        Plantacao plantacao = Plantacao.toEntity(command);
-        Plantacao resultado = plantacaoRepository.salvar(plantacao);
+        plantacaoRepository.buscarPorFazenda(command.fazendaNome())
+                .ifPresent(existing -> {
+                    throw new RuntimeException("Já existe uma plantação cadastrada para a fazenda: " + command.fazendaNome());
+                });
+
+        Plantacao plantacao = plantacaoRepository.salvar(Plantacao.toEntity(command));
 
         cadastrarAtualizacaoPlantioUC.executar(CadastrarAtualizacaoPlantioCommand
                 .toCommand(plantacao.getId(), command.fazendaNome(), command.temperaturaAmbiente(), command.temperaturaSolo(),
-                        command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.indiceUV()));
+                        command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.indiceUV(), command.custoEsperado()));
 
-        return mapper.toDTO(resultado);
+        return mapper.toDTO(plantacao);
     }
 }

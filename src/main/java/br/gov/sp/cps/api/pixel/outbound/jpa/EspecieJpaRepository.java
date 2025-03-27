@@ -1,4 +1,4 @@
-package br.gov.sp.cps.api.pixel.outbound;
+package br.gov.sp.cps.api.pixel.outbound.jpa;
 
 import br.gov.sp.cps.api.pixel.core.domain.entity.Especie;
 import br.gov.sp.cps.api.pixel.core.domain.repository.EspecieRepository;
