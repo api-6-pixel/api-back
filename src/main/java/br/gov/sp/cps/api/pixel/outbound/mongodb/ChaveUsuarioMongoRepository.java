@@ -10,4 +10,10 @@ public interface ChaveUsuarioMongoRepository extends MongoRepository<ChaveUsuari
     default void salvar(Long idUsuario, String secretKey) {
         save(new ChaveUsuario(idUsuario,secretKey));
     }
+
+    default void deletar(Long idUsuario){
+        deleteByIdUsuario(idUsuario);
+    }
+
+    void deleteByIdUsuario(Long idUsuario);
 }
