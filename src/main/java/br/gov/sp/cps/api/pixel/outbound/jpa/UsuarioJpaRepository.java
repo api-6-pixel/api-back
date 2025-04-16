@@ -3,6 +3,7 @@ package br.gov.sp.cps.api.pixel.outbound.jpa;
 import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;
 import br.gov.sp.cps.api.pixel.core.domain.repository.UsuarioRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 
@@ -20,4 +21,9 @@ public interface UsuarioJpaRepository extends JpaRepository<Usuario, Long>, Usua
         delete(usuario);
     }
 
+    default UserDetails buscarPorEmail(String email) {
+        return findByEmail(email);
+    }
+
+    UserDetails findByEmail(String email);
 }
