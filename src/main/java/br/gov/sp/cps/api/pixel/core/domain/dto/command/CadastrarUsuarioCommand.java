@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class CadastrarUsuarioCommand {
-
     private String nome;
     private String email;
     private String senha;
     private String documento;
+    private String funcao;
 }

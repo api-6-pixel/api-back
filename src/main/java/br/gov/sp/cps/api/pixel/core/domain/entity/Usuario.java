@@ -43,15 +43,8 @@ public class Usuario implements UserDetails {
     @Column(name = "usuario_dt_criacao", nullable = false)
     private LocalDateTime dataCriacao;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "usuario_funcao", nullable = false)
-    private FuncaoUsuario funcao;
-
-    public Usuario (String email, String senha, FuncaoUsuario funcao){
-        this.email = email;
-        this.senha = senha;
-        this.funcao = funcao;
-    }
+    private String funcao;
 
     public static Usuario toEntity(CadastrarUsuarioCommand command){
         Usuario usuario = new Usuario();
@@ -60,6 +53,7 @@ public class Usuario implements UserDetails {
         usuario.setSenha(command.getSenha());
         usuario.setDocumento(command.getDocumento());
         usuario.setDataCriacao(LocalDateTime.now());
+        usuario.setFuncao(command.getFuncao());
         return usuario;
     }
 
