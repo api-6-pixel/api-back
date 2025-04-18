@@ -46,6 +46,9 @@ public class Usuario implements UserDetails {
     @Column(name = "usuario_funcao", nullable = false)
     private String funcao;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Fazenda> fazendas;
+
     public static Usuario toEntity(CadastrarUsuarioCommand command){
         Usuario usuario = new Usuario();
         usuario.setNome(command.getNome());

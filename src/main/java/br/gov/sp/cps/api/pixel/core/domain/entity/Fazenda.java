@@ -34,19 +34,19 @@ public class Fazenda {
     @Column(name = "fazenda_criacao", nullable = false)
     private LocalDateTime dataCriacao;
 
-    /*
-    @OneToMany(mappedBy = "fazenda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Plantacao> plantacoes;
-     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
-    public Fazenda(String nome, String localizacao, Double areaTotal, LocalDateTime dataCriacao) {
+    public Fazenda(String nome, String localizacao, Double areaTotal, LocalDateTime dataCriacao, Usuario usuario) {
         this.nome = nome;
         this.localizacao = localizacao;
         this.areaTotal = areaTotal;
         this.dataCriacao = dataCriacao;
+        this.usuario = usuario;
     }
 
-    public static Fazenda toEntity(CadastrarFazendaCommand command) {
-        return new Fazenda(command.nome(), command.localizacao(), command.areaTotal(), LocalDateTime.now());
+    public static Fazenda toEntity(CadastrarFazendaCommand command, Usuario usuario) {
+        return new Fazenda(command.nome(), command.localizacao(), command.areaTotal(), LocalDateTime.now(), usuario);
     }
 }
