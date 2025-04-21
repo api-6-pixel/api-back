@@ -16,4 +16,10 @@ public interface ChaveUsuarioMongoRepository extends MongoRepository<ChaveUsuari
     }
 
     void deleteByIdUsuario(Long idUsuario);
+
+    default ChaveUsuario carregar(Long idUsuario){
+        return findByIdUsuario(idUsuario);
+    }
+
+    ChaveUsuario findByIdUsuario(Long idUsuario);
 }
