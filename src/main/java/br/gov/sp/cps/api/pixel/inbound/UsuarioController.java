@@ -1,11 +1,13 @@
 package br.gov.sp.cps.api.pixel.inbound;
 
 import br.gov.sp.cps.api.pixel.core.domain.dto.PlantacaoDTO;
+import br.gov.sp.cps.api.pixel.core.domain.dto.UsuarioDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarPlantacaoCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.DeletarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;
 import br.gov.sp.cps.api.pixel.core.usecase.CadastrarUsuarioUC;
+import br.gov.sp.cps.api.pixel.core.usecase.CarregarUsuarioUC;
 import br.gov.sp.cps.api.pixel.core.usecase.DeletarUsuarioUC;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ public class UsuarioController {
 
     private final CadastrarUsuarioUC cadastrarUsuarioUC;
     private final DeletarUsuarioUC deletarUsuarioUC;
+    private final CarregarUsuarioUC carregarUsuarioUC;
 
     @PostMapping
     public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody CadastrarUsuarioCommand command) throws Exception {
@@ -30,6 +33,12 @@ public class UsuarioController {
                 .buildAndExpand(usuario.getId())
                 .toUri();
         return ResponseEntity.created(location).body(usuario);
+    }
+
+    @GetMapping("/{idUsuario}")
+    public ResponseEntity<UsuarioDTO>  obterUsuario(@PathVariable Long idUsuario) throws Exception {
+        UsuarioDTO usuario = carregarUsuarioUC.executar(idUsuario);
+        return ResponseEntity.ok(usuario);
     }
 
     @DeleteMapping("/{idUsuario}")
