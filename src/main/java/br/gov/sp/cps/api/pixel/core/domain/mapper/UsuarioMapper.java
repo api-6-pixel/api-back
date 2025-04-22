@@ -18,6 +18,8 @@ public class UsuarioMapper {
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
+                usuario.getDocumento(),
+                usuario.getDataCriacao(),
                 plantacao
         );
     }
