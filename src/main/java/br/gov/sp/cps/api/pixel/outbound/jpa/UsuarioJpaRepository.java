@@ -5,6 +5,7 @@ import br.gov.sp.cps.api.pixel.core.domain.repository.UsuarioRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioJpaRepository extends JpaRepository<Usuario, Long>, UsuarioRepository {
@@ -26,4 +27,8 @@ public interface UsuarioJpaRepository extends JpaRepository<Usuario, Long>, Usua
     }
 
     UserDetails findByEmail(String email);
+
+    default List<Usuario> buscarTodos(){
+        return findAll();
+    }
 }
