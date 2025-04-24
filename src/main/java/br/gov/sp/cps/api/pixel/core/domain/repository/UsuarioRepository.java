@@ -3,6 +3,7 @@ package br.gov.sp.cps.api.pixel.core.domain.repository;
 import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository {
@@ -13,6 +14,5 @@ public interface UsuarioRepository {
     void deletar(Usuario usuario);
 
     Usuario buscarPorEmail(String email);
-
 
 }
