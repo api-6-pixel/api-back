@@ -13,7 +13,6 @@ public interface UsuarioRepository {
 
     void deletar(Usuario usuario);
 
-    UserDetails buscarPorEmail(String email);
+    Usuario buscarPorEmail(String email);
 
-    List<Usuario> buscarTodos();
 }

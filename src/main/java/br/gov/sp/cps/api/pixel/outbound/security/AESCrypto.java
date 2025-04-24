@@ -1,6 +1,8 @@
 package br.gov.sp.cps.api.pixel.outbound.security;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.command.AlterarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarUsuarioCommand;
+import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;
 import br.gov.sp.cps.api.pixel.core.domain.repository.CriptografiaRepository;
 import org.springframework.stereotype.Component;
 
@@ -38,5 +40,21 @@ public class AESCrypto implements CriptografiaRepository {
         command.setDocumento(encriptar(command.getDocumento(), secretKey));
         command.setFuncao(encriptar(command.getFuncao(), secretKey));
         return command;
+    }
+
+    @Override
+    public Object getObjectEncriptografado(AlterarUsuarioCommand command, SecretKey secretKey) throws Exception {
+        command.setNome(encriptar(command.getNome(), secretKey));
+        command.setEmail(command.getEmail());
+        command.setDocumento(encriptar(command.getDocumento(), secretKey));
+        return command;
+    }
+
+    public Object getObjectDescriptografado(Usuario usuario, SecretKey secretKey) throws Exception {
+        usuario.getId();
+        usuario.setNome(descriptografar(usuario.getNome(), secretKey));
+        usuario.setDocumento(descriptografar(usuario.getDocumento(), secretKey));
+
+        return usuario;
     }
 }

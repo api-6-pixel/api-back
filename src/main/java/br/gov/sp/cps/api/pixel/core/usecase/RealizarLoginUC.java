@@ -3,6 +3,7 @@ package br.gov.sp.cps.api.pixel.core.usecase;
 import br.gov.sp.cps.api.pixel.core.domain.dto.AutenticacaoDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.LoginDTO;
 import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;
+import br.gov.sp.cps.api.pixel.core.domain.repository.UsuarioRepository;
 import br.gov.sp.cps.api.pixel.core.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,12 +16,14 @@ public class RealizarLoginUC {
 
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
+    private final UsuarioRepository usuarioRepository;
 
     public LoginDTO realizarLogin(AutenticacaoDTO data) {
+        Usuario usuario = usuarioRepository.buscarPorEmail(data.email());
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());
         var auth = authenticationManager.authenticate(usernamePassword);
         var token = tokenService.gerarToken((Usuario) auth.getPrincipal());
 
-        return new LoginDTO(token);
+        return new LoginDTO(token,usuario.getId());
     }
 }

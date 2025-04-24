@@ -1,7 +1,8 @@
 package br.gov.sp.cps.api.pixel.core.domain.entity;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.PlantacaoDTO;
+import br.gov.sp.cps.api.pixel.core.domain.dto.command.AlterarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarUsuarioCommand;
-import br.gov.sp.cps.api.pixel.core.domain.enumeration.FuncaoUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -46,6 +48,9 @@ public class Usuario implements UserDetails {
     @Column(name = "usuario_funcao", nullable = false)
     private String funcao;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Plantacao> plantacao;
+
     public static Usuario toEntity(CadastrarUsuarioCommand command){
         Usuario usuario = new Usuario();
         usuario.setNome(command.getNome());
@@ -55,6 +60,30 @@ public class Usuario implements UserDetails {
         usuario.setDataCriacao(LocalDateTime.now());
         usuario.setFuncao(command.getFuncao());
         return usuario;
+    }
+    public static Usuario toEntity(AlterarUsuarioCommand command) {
+        Usuario usuario = new Usuario();
+        usuario.setId(command.getId());
+        usuario.setNome(command.getNome());
+        usuario.setEmail(command.getEmail());
+        usuario.setDocumento(command.getDocumento());
+        return usuario;
+    }
+
+    public void atualizarPlantacao(List<PlantacaoDTO>plantacaoDTO){
+        if (this.plantacao == null) {
+            this.plantacao = new ArrayList<>();
+        }
+        for (PlantacaoDTO dto : plantacaoDTO) {
+            for (Plantacao plant : this.plantacao) {
+                if (plant.getId().equals(dto.id())){
+                    plant.setFazendaNome(dto.fazendaNome());
+                    break;
+                }
+
+
+            }
+        }
     }
 
     @Override
@@ -95,3 +124,4 @@ public class Usuario implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 }
+

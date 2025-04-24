@@ -42,22 +42,27 @@ public class Plantacao {
     @Column(name = "plantacao_status", nullable = false)
     private StatusPlantacao status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
     public Plantacao(String fazendaNome,
                      String especieNome,
                      Double areaPlantada,
                      LocalDateTime dataPlantio,
                      Double custoEsperado,
-                     StatusPlantacao status){
+                     StatusPlantacao status,Usuario usuario) {
         this.fazendaNome = fazendaNome;
         this.especieNome = especieNome;
         this.areaPlantada = areaPlantada;
         this.dataPlantio = dataPlantio;
         this.custoEsperado = custoEsperado;
         this.status = status;
+        this.usuario = usuario;
     }
 
-    public static Plantacao toEntity(CadastrarPlantacaoCommand command) {
+    public static Plantacao toEntity(CadastrarPlantacaoCommand command,Usuario usuario) {
         return new Plantacao(command.fazendaNome(), command.especieNome(), command.areaPlantada(),
-                LocalDateTime.now(), command.custoEsperado(), command.status());
+                LocalDateTime.now(), command.custoEsperado(), command.status(),usuario);
     }
 }

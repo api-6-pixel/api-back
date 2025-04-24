@@ -22,13 +22,9 @@ public interface UsuarioJpaRepository extends JpaRepository<Usuario, Long>, Usua
         delete(usuario);
     }
 
-    default UserDetails buscarPorEmail(String email) {
+    default Usuario buscarPorEmail(String email) {
         return findByEmail(email);
     }
 
-    UserDetails findByEmail(String email);
-
-    default List<Usuario> buscarTodos(){
-        return findAll();
-    }
+    Usuario findByEmail(String email);
 }
