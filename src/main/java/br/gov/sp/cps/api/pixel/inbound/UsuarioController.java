@@ -1,7 +1,5 @@
 package br.gov.sp.cps.api.pixel.inbound;
 
-import br.gov.sp.cps.api.pixel.core.domain.dto.PlantacaoDTO;
-import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarPlantacaoCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.DeletarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;

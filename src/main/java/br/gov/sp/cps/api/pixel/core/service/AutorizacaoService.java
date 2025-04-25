@@ -13,7 +13,12 @@ public class AutorizacaoService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
 
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return usuarioRepository.buscarPorEmail(email);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserDetails user = usuarioRepository.buscarPorUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Usuário não encontrado com username: " + username);
+        }
+        return user;
     }
 }

@@ -23,7 +23,7 @@ public class TokenService {
             Algorithm algoritmo = Algorithm.HMAC256(segredo);
             return JWT.create()
                     .withIssuer("pixel")
-                    .withSubject(usuario.getEmail())
+                    .withSubject(usuario.getUsername())
                     .withExpiresAt(definirDataExpiracao())
                     .sign(algoritmo);
         } catch (JWTCreationException exception) {

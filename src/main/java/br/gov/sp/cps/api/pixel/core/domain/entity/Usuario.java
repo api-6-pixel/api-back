@@ -1,7 +1,6 @@
 package br.gov.sp.cps.api.pixel.core.domain.entity;
 
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarUsuarioCommand;
-import br.gov.sp.cps.api.pixel.core.domain.enumeration.FuncaoUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +33,9 @@ public class Usuario implements UserDetails {
     @Column(name = "usuario_email", nullable = false)
     private String email;
 
+    @Column(name = "usuario_username", nullable = false)
+    private String username;
+
     @Column(name = "usuario_senha", nullable = false)
     private String senha;
 
@@ -53,6 +55,7 @@ public class Usuario implements UserDetails {
         Usuario usuario = new Usuario();
         usuario.setNome(command.getNome());
         usuario.setEmail(command.getEmail());
+        usuario.setUsername(command.getUsername());
         usuario.setSenha(command.getSenha());
         usuario.setDocumento(command.getDocumento());
         usuario.setDataCriacao(LocalDateTime.now());
@@ -75,7 +78,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

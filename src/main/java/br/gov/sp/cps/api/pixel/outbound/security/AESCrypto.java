@@ -33,7 +33,8 @@ public class AESCrypto implements CriptografiaRepository {
 
     public Object getObjectEncriptografado(CadastrarUsuarioCommand command, SecretKey secretKey) throws Exception {
         command.setNome(encriptar(command.getNome(), secretKey));
-        command.setEmail(command.getEmail());
+        command.setEmail(encriptar(command.getEmail(), secretKey));
+        command.setUsername(command.getUsername());
         command.setSenha(command.getSenha());
         command.setDocumento(encriptar(command.getDocumento(), secretKey));
         command.setFuncao(encriptar(command.getFuncao(), secretKey));

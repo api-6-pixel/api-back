@@ -17,13 +17,12 @@ public class RealizarLoginUC {
 
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
-    private final UsuarioRepository usuarioRepository;
 
     public LoginDTO realizarLogin(AutenticacaoDTO data) {
-        Usuario usuario = usuarioRepository.buscarPorEmail(data.email());
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.senha());
         var auth = authenticationManager.authenticate(usernamePassword);
         var token = tokenService.gerarToken((Usuario) auth.getPrincipal());
+        Usuario usuario = (Usuario) auth.getPrincipal();
 
         return new LoginDTO(token, usuario.getId());
     }

@@ -13,4 +13,6 @@ public interface UsuarioRepository {
     void deletar(Usuario usuario);
 
     Usuario buscarPorEmail(String email);
+
+    UserDetails buscarPorUsername(String username);
 }
