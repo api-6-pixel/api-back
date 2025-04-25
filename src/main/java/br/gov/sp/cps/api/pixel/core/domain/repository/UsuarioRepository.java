@@ -15,4 +15,6 @@ public interface UsuarioRepository {
 
     Usuario buscarPorEmail(String email);
 
+    List<Usuario> buscarTodos();
+
 }
