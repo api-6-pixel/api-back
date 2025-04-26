@@ -13,5 +13,5 @@ public record CadastrarPlantacaoCommand(
         Double umidadeAmbiente,
         Double umidadeSolo,
         Double phSolo,
-        Double indiceUV) {
+        Double indiceUV,Long idUsuario) {
 }
