@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/historico")
+@CrossOrigin(origins = "*")
 public class TermoItemAceiteUsuarioHistoricoController {
 
     @Autowired

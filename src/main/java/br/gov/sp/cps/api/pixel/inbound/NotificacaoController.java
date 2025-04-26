@@ -2,16 +2,14 @@ package br.gov.sp.cps.api.pixel.inbound;
 
 import br.gov.sp.cps.api.pixel.core.usecase.NotificacaoUC;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/notificacoes")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class NotificacaoController {
 
     private final NotificacaoUC notificacaoUC;
