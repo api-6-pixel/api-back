@@ -39,6 +39,9 @@ public class Usuario implements UserDetails {
     @Column(name = "usuario_senha", nullable = false)
     private String senha;
 
+    @Column(name = "usuario_username", nullable = false)
+    private String nomeUsuario;
+
     @Column(name = "usuario_documento", nullable = false)
     private String documento;
 
@@ -56,6 +59,7 @@ public class Usuario implements UserDetails {
         usuario.setNome(command.getNome());
         usuario.setEmail(command.getEmail());
         usuario.setSenha(command.getSenha());
+        usuario.setNomeUsuario(command.getNomeUsuario());
         usuario.setDocumento(command.getDocumento());
         usuario.setDataCriacao(LocalDateTime.now());
         usuario.setFuncao(command.getFuncao());

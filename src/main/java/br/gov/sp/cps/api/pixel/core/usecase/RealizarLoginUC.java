@@ -8,6 +8,7 @@ import br.gov.sp.cps.api.pixel.core.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,8 +20,8 @@ public class RealizarLoginUC {
     private final UsuarioRepository usuarioRepository;
 
     public LoginDTO realizarLogin(AutenticacaoDTO data) {
-        Usuario usuario = usuarioRepository.buscarPorEmail(data.email());
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());
+        Usuario usuario = usuarioRepository.buscarPorNomeUsuario(data.nomeUsuario());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.nomeUsuario(), data.senha());
         var auth = authenticationManager.authenticate(usernamePassword);
         var token = tokenService.gerarToken((Usuario) auth.getPrincipal());
 

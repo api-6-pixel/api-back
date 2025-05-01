@@ -21,8 +21,8 @@ public class CadastrarUsuarioUC {
     private final ChaveUsuarioRepository chaveUsuarioRepository;
 
     public Usuario executar(CadastrarUsuarioCommand command) throws Exception {
-        if (usuarioRepository.buscarPorEmail(command.getEmail()) != null) {
-            throw new IllegalArgumentException("Email já cadastrado");
+        if (usuarioRepository.buscarPorNomeUsuario(command.getNomeUsuario()) != null) {
+            throw new IllegalArgumentException("Nome de usuario já cadastrado");
         }
 
         String senhaCriptografada = new BCryptPasswordEncoder().encode(command.getSenha());
