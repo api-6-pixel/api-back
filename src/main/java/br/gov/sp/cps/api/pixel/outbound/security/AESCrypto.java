@@ -19,6 +19,7 @@ public class AESCrypto implements CriptografiaRepository {
         generator.init(256);
         return generator.generateKey();
     }
+    
     public String encriptar(String plainText, SecretKey key) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, key);
