@@ -1,4 +1,4 @@
-package br.gov.sp.cps.api.pixel.inbound;
+package br.gov.sp.cps.api.pixel.inbound.rest;
 
 import br.gov.sp.cps.api.pixel.core.domain.dto.UsuarioDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.AlterarUsuarioCommand;
@@ -12,6 +12,7 @@ import br.gov.sp.cps.api.pixel.core.usecase.DeletarUsuarioUC;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -38,7 +39,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{idUsuario}")
-    public ResponseEntity<UsuarioDTO>  obterUsuario(@PathVariable Long idUsuario) throws Exception {
+    public ResponseEntity<UsuarioDTO>  obterUsuario(@PathVariable Long idUsuario) {
         UsuarioDTO usuario = carregarUsuarioUC.executar(idUsuario);
         return ResponseEntity.ok(usuario);
     }
