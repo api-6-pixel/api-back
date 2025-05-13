@@ -28,10 +28,10 @@ public class FiltroSeguranca extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         var token = this.recuperarToken(request);
         if(token != null){
-            var email = tokenService.validarToken(token);
-            UserDetails user = usuarioRepository.buscarPorEmail(email);
+            var username = tokenService.validarToken(token);
+            UserDetails user = usuarioRepository.buscarPorNomeUsuario(username);
 
-            var autenticacao = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            var autenticacao = new UsernamePasswordAuthenticationToken(user, null, null);
             SecurityContextHolder.getContext().setAuthentication(autenticacao);
         }
         filterChain.doFilter(request, response);
