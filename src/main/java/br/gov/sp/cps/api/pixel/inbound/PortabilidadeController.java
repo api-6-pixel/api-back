@@ -10,13 +10,13 @@ import br.gov.sp.cps.api.pixel.core.domain.dto.command.PortabilidadeCriarChaveCo
 import br.gov.sp.cps.api.pixel.core.usecase.CriarChavePortabilidadeUC;
 
 @RestController
-@RequestMapping("/api/p")
+@RequestMapping("/api/portabilidade")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class PortabilidadeController {
     private final CriarChavePortabilidadeUC criarChavePortabilidadeUC;
 
-    @PostMapping("c")
+    @PostMapping()
     public ResponseEntity<CriarChavePortabilidadeDTO> criarChavePortabilidade(@RequestBody PortabilidadeCriarChaveCommand command) throws Exception{
         CriarChavePortabilidadeDTO chave = criarChavePortabilidadeUC.executar(command);
         return ResponseEntity.ok(chave);

@@ -34,10 +34,11 @@ public class ConfiguracaoSeguranca {
                         .requestMatchers(HttpMethod.GET, "/api/historico/ativo").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/historico/aceite").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/portabilidade").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/p/c").anonymous()
+                        .requestMatchers(HttpMethod.POST, "/api/portabilidade").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(filtroSeguranca, UsernamePasswordAuthenticationFilter.class)
-                .build();    }
+                .build();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
