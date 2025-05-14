@@ -1,4 +1,4 @@
-package br.gov.sp.cps.api.pixel.inbound;
+package br.gov.sp.cps.api.pixel.inbound.rest;
 
 import br.gov.sp.cps.api.pixel.core.usecase.NotificacaoUC;
 import lombok.RequiredArgsConstructor;
