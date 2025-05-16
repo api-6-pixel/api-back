@@ -5,5 +5,7 @@ import lombok.Data;
 @Data
 public class ObterUsuarioIDCommand {
     private String usuarioID;
+    private String aesKey;
+    private String aesIv;
     private Long clientID;
 }
