@@ -28,7 +28,7 @@ public class ObterUsuarioUC {
     private final PortabilidadeRepository portabilidadeRepository;
 
     public PortabilidadeDTO executar (ObterUsuarioIDCommand command) throws Exception{
-        ChavePortabilidade chave = portabilidadeRepository.buscarPorId(command.getClientID())
+        ChavePortabilidade chave = portabilidadeRepository.findById(command.getClientID())
         .orElseThrow(() -> new RuntimeException("Nenhuma chave encontrada para o ID informado."));
         
          LocalDateTime agora = LocalDateTime.now();

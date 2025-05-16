@@ -10,9 +10,4 @@ public interface PortabilidadeJpaRepository extends JpaRepository<ChavePortabili
     default ChavePortabilidade salvar(ChavePortabilidade especie) {
         return save(especie);
     }
-
-    default Optional<ChavePortabilidade> buscarPorId(String id) {
-        return findById(id);
-    }
-    
 }

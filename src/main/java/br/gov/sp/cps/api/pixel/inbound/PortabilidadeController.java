@@ -2,6 +2,7 @@ package br.gov.sp.cps.api.pixel.inbound;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.gov.sp.cps.api.pixel.core.domain.dto.CriarChavePortabilidadeDTO;
@@ -20,7 +21,7 @@ public class PortabilidadeController {
     private final CriarChavePortabilidadeUC criarChavePortabilidadeUC;
     private final ObterUsuarioUC obterUsuarioUC;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<CriarChavePortabilidadeDTO> criarChavePortabilidade(@RequestBody PortabilidadeCriarChaveCommand command) throws Exception{
         CriarChavePortabilidadeDTO chave = criarChavePortabilidadeUC.executar(command);
         return ResponseEntity.ok(chave);
