@@ -67,7 +67,7 @@ public class ObterUsuarioUC {
             byte[] novaChave = criptografar(Base64.getEncoder().encodeToString(key), chavePublica);
             byte[] novaIv = criptografar(Base64.getEncoder().encodeToString(iv), chavePublica);
 
-            return new PortabilidadeDTO(dados, Base64.getEncoder().encodeToString(key),Base64.getEncoder().encodeToString(iv));
+            return new PortabilidadeDTO(dados, Base64.getEncoder().encodeToString(novaChave),Base64.getEncoder().encodeToString(novaIv));
         }
     } 
 
