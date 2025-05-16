@@ -2,6 +2,9 @@ package br.gov.sp.cps.api.pixel.core.usecase;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPublicKey;
+import java.util.Base64;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.cps.api.pixel.core.domain.dto.CriarChavePortabilidadeDTO;
@@ -17,15 +20,25 @@ public class CriarChavePortabilidadeUC {
     
     public CriarChavePortabilidadeDTO executar(PortabilidadeCriarChaveCommand command) throws Exception{
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-        generator.initialize(2048); 
+        generator.initialize(4096); 
         KeyPair keyPair = generator.generateKeyPair();
         
         ChavePortabilidade novaChave = new ChavePortabilidade();
         novaChave.setTempoExp(command.getTempoExpiracao());
-        novaChave.setLibChavePublica(command.getChave()); 
-        novaChave.setMinhaChavePrivada(keyPair.getPrivate().toString());
+        novaChave.setLibChavePublica(Base64.getEncoder().encodeToString(command.getChave().getBytes())); 
+        novaChave.setMinhaChavePrivada(Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded()));
         portabilidadeRepository.salvar(novaChave);
         
-        return new CriarChavePortabilidadeDTO(keyPair.getPublic().toString(), novaChave.getId().toString());    
+        return new CriarChavePortabilidadeDTO(toXml((RSAPublicKey)keyPair.getPublic()), novaChave.getId().toString());    
+    }
+
+     public static String toXml(RSAPublicKey publicKey) {
+        String modulus = Base64.getEncoder().encodeToString(publicKey.getModulus().toByteArray());
+        String exponent = Base64.getEncoder().encodeToString(publicKey.getPublicExponent().toByteArray());
+
+        return "<RSAKeyValue>" +
+               "<Modulus>" + modulus + "</Modulus>" +
+               "<Exponent>" + exponent + "</Exponent>" +
+               "</RSAKeyValue>";
     }
 }

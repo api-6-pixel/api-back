@@ -27,7 +27,7 @@ public class PortabilidadeController {
         return ResponseEntity.ok(chave);
     }
 
-    @GetMapping
+    @PostMapping("/getuser")
     public ResponseEntity<PortabilidadeDTO> obterUsuarioID (@RequestBody ObterUsuarioIDCommand command) throws Exception{
         PortabilidadeDTO chave = obterUsuarioUC.executar(command);
         return ResponseEntity.ok(chave);

@@ -21,10 +21,10 @@ import lombok.Setter;
 @Table(name = "tb_portabilidade")
 public class ChavePortabilidade {
 
-    @Column(name = "portabilidade_minha_chave_privada", nullable = false)
+    @Column(name = "portabilidade_minha_chave_privada", nullable = false, length = 5000)
     private String minhaChavePrivada;
 
-    @Column(name = "portabilidade_lib_chave_publica", nullable = false)
+    @Column(name = "portabilidade_lib_chave_publica", nullable = false, length = 5000)
     private String libChavePublica;
 
     @Column(name = "portabilidade_tempo_expiracao", nullable = false)

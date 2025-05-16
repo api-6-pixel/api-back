@@ -28,7 +28,7 @@ public class ObterUsuarioUC {
     private final PortabilidadeRepository portabilidadeRepository;
 
     public PortabilidadeDTO executar (ObterUsuarioIDCommand command) throws Exception{
-        ChavePortabilidade chave = portabilidadeRepository.findById(command.getClientID())
+        ChavePortabilidade chave = portabilidadeRepository.buscarPorId(command.getClientID())
         .orElseThrow(() -> new RuntimeException("Nenhuma chave encontrada para o ID informado."));
         
          LocalDateTime agora = LocalDateTime.now();
@@ -36,11 +36,11 @@ public class ObterUsuarioUC {
         if (agora.isAfter(chave.getTempoExp())) {
             throw new RuntimeException("Chave expirada");
         } else {
-            ObjectMapper mapper = new ObjectMapper();
-                
+            PrivateKey chavePrivada = getChavePrivadaDeTexto(chave.getMinhaChavePrivada());
             String textoDescriptografado = 
-                descriptografar(command.getUsuarioID().getBytes(), getChavePrivadaDeTexto(chave.getMinhaChavePrivada()));
+                descriptografar(command.getUsuarioID(), chavePrivada);
             
+            ObjectMapper mapper = new ObjectMapper();
             UsuarioDTO usuario = usuarioUc.executar(Long.parseLong(textoDescriptografado));
             String usuarioJson = mapper.writeValueAsString(usuario);
 
@@ -55,10 +55,10 @@ public class ObterUsuarioUC {
         return cipher.doFinal(texto.getBytes());
     }
 
-    public static String descriptografar(byte[] textoCriptografado, PrivateKey chavePrivada) throws Exception {
+    public static String descriptografar(String textoBase64, PrivateKey chavePrivada) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, chavePrivada);
-        byte[] bytesDescriptografados = cipher.doFinal();
+        byte[] bytesDescriptografados = cipher.doFinal(Base64.getDecoder().decode(textoBase64));
         return new String(bytesDescriptografados);
     }
 
