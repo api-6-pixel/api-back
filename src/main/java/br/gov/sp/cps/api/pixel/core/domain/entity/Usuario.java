@@ -3,6 +3,7 @@ package br.gov.sp.cps.api.pixel.core.domain.entity;
 import br.gov.sp.cps.api.pixel.core.domain.dto.PlantacaoDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.AlterarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarUsuarioCommand;
+import br.gov.sp.cps.api.pixel.core.domain.enumeration.FuncaoUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static br.gov.sp.cps.api.pixel.core.domain.enumeration.FuncaoUsuario.ADMIN;
+import static br.gov.sp.cps.api.pixel.core.domain.enumeration.FuncaoUsuario.USUARIO;
+import static org.hibernate.cfg.JdbcSettings.USER;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -90,10 +95,20 @@ public class Usuario implements UserDetails {
         }
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.funcao != null) {
-            return List.of(new SimpleGrantedAuthority("USUARIO"));
+            return switch (funcao.toUpperCase()) {
+                case "ADMIN" -> List.of(
+                        new SimpleGrantedAuthority("ROLE_ADMIN"),
+                        new SimpleGrantedAuthority("ROLE_USUARIO")
+                );
+                case "USUARIO" -> List.of(
+                        new SimpleGrantedAuthority("ROLE_USUARIO")
+                );
+                default -> List.of();
+            };
         }
         return List.of();
     }
