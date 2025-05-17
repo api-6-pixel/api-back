@@ -1,6 +1,7 @@
 package br.gov.sp.cps.api.pixel.core.domain.entity;
 
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarAtualizacaoPlantioCommand;
+import br.gov.sp.cps.api.pixel.core.domain.enumeration.CondicaoPlantacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,6 +47,10 @@ public class AtualizacaoPlantio {
 
     @Column(name = "atualizacao_registro", nullable = false)
     private LocalDateTime dataRegistro;
+
+    @Column(name = "atualizacao_condicao")
+    @Enumerated(EnumType.STRING)
+    private CondicaoPlantacao condicaoPlantacao;
 
     public AtualizacaoPlantio(Plantacao plantacao, Double temperaturaAmbiente, Double temperaturaSolo,
                               Double umidadeAmbiente, Double umidadeSolo, Double phSolo, Double indiceUV,

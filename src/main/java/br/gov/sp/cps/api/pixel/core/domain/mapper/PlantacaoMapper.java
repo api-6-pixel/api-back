@@ -8,5 +8,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface PlantacaoMapper {
-    PlantacaoDTO toDTO(Plantacao plantacao);
+    @Mapping(source = "idAtualizacao", target = "idAtualizacao")
+    PlantacaoDTO toDTO(Plantacao plantacao, Long idAtualizacao);
 }
