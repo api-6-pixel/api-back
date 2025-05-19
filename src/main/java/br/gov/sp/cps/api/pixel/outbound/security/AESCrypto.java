@@ -54,6 +54,7 @@ public class AESCrypto implements CriptografiaRepository {
         usuario.setNome(descriptografar(usuario.getNome(), secretKey));
         usuario.setDocumento(descriptografar(usuario.getDocumento(), secretKey));
         usuario.setEmail(descriptografar(usuario.getEmail(), secretKey));
+        usuario.setFuncao(descriptografar(usuario.getFuncao(), secretKey));
 
         return usuario;
     }
