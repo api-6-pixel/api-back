@@ -4,8 +4,10 @@ import br.gov.sp.cps.api.pixel.core.domain.dto.DadosRelatorioDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.RelatorioDTO;
 import br.gov.sp.cps.api.pixel.core.domain.entity.ChaveUsuario;
 import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;
-import br.gov.sp.cps.api.pixel.core.domain.mapper.UsuarioMapper;
-import br.gov.sp.cps.api.pixel.core.domain.repository.*;
+import br.gov.sp.cps.api.pixel.core.domain.repository.AtualizacaoPlantioRepository;
+import br.gov.sp.cps.api.pixel.core.domain.repository.ChaveUsuarioRepository;
+import br.gov.sp.cps.api.pixel.core.domain.repository.CriptografiaRepository;
+import br.gov.sp.cps.api.pixel.core.domain.repository.UsuarioRepository;
 import br.gov.sp.cps.api.pixel.core.service.RelatorioService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,6 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,12 +32,8 @@ public class GerarRelatorioUC {
 
     @Transactional
     public RelatorioDTO executar(Long idUsuario, Long idPlantacao) throws IOException {
-        Optional<Usuario> usuario = usuarioRepository.carregar(idUsuario);
-        if (usuario.isEmpty()) {
-            throw new RuntimeException("Nenhum usuário encontrado para o ID informado.");
-        }
-
-        Usuario result = usuario.get();
+        Usuario usuario = usuarioRepository.carregar(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Nenhum usuário encontrado para o ID informado."));
 
         ChaveUsuario chaveUsuario = chaveUsuarioRepository.carregar(idUsuario);
         if (chaveUsuario == null) {
@@ -48,14 +45,14 @@ public class GerarRelatorioUC {
 
         Usuario usuarioDescriptografado;
         try {
-            usuarioDescriptografado = (Usuario) criptografiaRepository.getObjectDescriptografado(result, secretKey);
+            usuarioDescriptografado = (Usuario) criptografiaRepository.getObjectDescriptografado(usuario, secretKey);
         } catch (Exception e) {
             throw new RuntimeException("Erro ao descriptografar os dados do usuário.", e);
         }
 
         String nomeUsuario = usuarioDescriptografado.getNome();
 
-        var plantacaoUsuario = usuario.get().getPlantacao().stream()
+        var plantacaoUsuario = usuario.getPlantacao().stream()
                 .filter(p -> p.getId().equals(idPlantacao))
                 .findFirst();
         if (plantacaoUsuario.isEmpty()) {
