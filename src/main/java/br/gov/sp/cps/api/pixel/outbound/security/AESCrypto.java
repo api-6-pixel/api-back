@@ -45,7 +45,7 @@ public class AESCrypto implements CriptografiaRepository {
     @Override
     public Object getObjectEncriptografado(AlterarUsuarioCommand command, SecretKey secretKey) throws Exception {
         command.setNome(encriptar(command.getNome(), secretKey));
-        command.setEmail(command.getEmail());
+        command.setEmail(encriptar(command.getEmail(), secretKey));
         command.setDocumento(encriptar(command.getDocumento(), secretKey));
         return command;
     }
@@ -54,6 +54,7 @@ public class AESCrypto implements CriptografiaRepository {
         usuario.setNome(descriptografar(usuario.getNome(), secretKey));
         usuario.setDocumento(descriptografar(usuario.getDocumento(), secretKey));
         usuario.setEmail(descriptografar(usuario.getEmail(), secretKey));
+        usuario.setFuncao(descriptografar(usuario.getFuncao(), secretKey));
 
         return usuario;
     }

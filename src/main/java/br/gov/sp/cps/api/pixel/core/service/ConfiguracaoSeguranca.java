@@ -29,10 +29,11 @@ public class ConfiguracaoSeguranca {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/usuarios/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/historico/ativo").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/historico/aceite").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/usuarios/**").permitAll()
+                        //.requestMatchers(HttpMethod.GET, "/api/usuarios/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(filtroSeguranca, UsernamePasswordAuthenticationFilter.class)
                 .build();    }
