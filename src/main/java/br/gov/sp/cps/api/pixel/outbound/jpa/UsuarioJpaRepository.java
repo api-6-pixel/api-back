@@ -25,7 +25,13 @@ public interface UsuarioJpaRepository extends JpaRepository<Usuario, Long>, Usua
         return findByNomeUsuario(nomeUsuario);
     }
 
+    default Usuario buscarPorEmail(String email) {
+        return findByEmail(email);
+    }
+
     Usuario findByNomeUsuario(String nomeUsuario);
+
+    Usuario findByEmail(String email);
 
 
     default  List<Usuario> buscarTodos(){

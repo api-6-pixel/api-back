@@ -1,5 +1,6 @@
 package br.gov.sp.cps.api.pixel.core.usecase;
 
+import br.gov.sp.cps.api.pixel.core.domain.repository.UsuarioRepository;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PublicKey;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CriarChavePortabilidadeUC {
     private final PortabilidadeRepository portabilidadeRepository;
+    private final UsuarioRepository usuarioRepository;
     
     public CriarChavePortabilidadeDTO executar(PortabilidadeCriarChaveCommand command) throws Exception{
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");

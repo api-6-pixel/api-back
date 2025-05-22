@@ -54,6 +54,10 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Plantacao> plantacao;
 
+   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ChavePortabilidade> chavePortabilidade;
+
+
     public static Usuario toEntity(CadastrarUsuarioCommand command){
         Usuario usuario = new Usuario();
         usuario.setNome(command.getNome());
@@ -65,6 +69,7 @@ public class Usuario implements UserDetails {
         usuario.setFuncao(command.getFuncao());
         return usuario;
     }
+
     public static Usuario toEntity(AlterarUsuarioCommand command) {
         Usuario usuario = new Usuario();
         usuario.setId(command.getId());

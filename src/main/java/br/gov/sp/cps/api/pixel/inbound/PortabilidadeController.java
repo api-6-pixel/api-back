@@ -32,4 +32,12 @@ public class PortabilidadeController {
         PortabilidadeDTO chave = obterUsuarioUC.executar(command);
         return ResponseEntity.ok(chave);
     }
+
+    //@PutMapping()
+    //public ResponseEntity<CriarChavePortabilidadeDTO> autorizarPortabilidade(@RequestBody PortabilidadeCriarChaveCommand command) throws Exception{
+        //CriarChavePortabilidadeDTO chave = criarChavePortabilidadeUC.executar(command);
+        //return ResponseEntity.ok(chave);
+    //}
+
+
 }
