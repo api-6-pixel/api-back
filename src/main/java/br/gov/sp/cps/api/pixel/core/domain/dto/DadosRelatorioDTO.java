@@ -5,7 +5,6 @@ import br.gov.sp.cps.api.pixel.core.domain.enumeration.StatusPlantacao;
 import java.time.LocalDateTime;
 
 public record DadosRelatorioDTO(
-        String nomeUsuario,
         String fazendaNome,
         String especieNome,
         Double areaPlantada,

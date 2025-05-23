@@ -20,9 +20,9 @@ public class RelatorioService {
     public static InputStreamResource exportarDadosLoteUsuario(List<DadosRelatorioDTO> dadosRelatorio) throws IOException {
 
         String[] HEADERS={
-                "Nome do Usuário", "Nome da Fazenda", "Espécie", "Área Plantada", "Data do Plantio",
-                "Custo Esperado", "Status", "Temperatura Ambiente", "Temperatura Solo", "Umidade Ambiente",
-                "Umidade Solo", "pH do Solo", "Índice UV", "Data da Atualização"
+                "Nome da Fazenda", "Espécie", "Área Plantada", "Data do Plantio",
+                "Custo Esperado", "Status", "Temperatura Ambiente", "Temperatura Solo",
+                "Umidade Ambiente", "Umidade Solo", "pH do Solo", "Índice UV", "Data da Atualização"
         };
 
         try (Workbook workbook = new XSSFWorkbook();
@@ -39,20 +39,19 @@ public class RelatorioService {
             for (DadosRelatorioDTO dto : dadosRelatorio) {
                 Row row = sheet.createRow(rowIndex++);
 
-                row.createCell(0).setCellValue(dto.nomeUsuario());
-                row.createCell(1).setCellValue(dto.fazendaNome());
-                row.createCell(2).setCellValue(dto.especieNome());
-                row.createCell(3).setCellValue(dto.areaPlantada());
-                row.createCell(4).setCellValue(dto.dataPlantio().toString());
-                row.createCell(5).setCellValue(dto.custoEsperado());
-                row.createCell(6).setCellValue(dto.status().toString());
-                row.createCell(7).setCellValue(dto.temperaturaAmbiente());
-                row.createCell(8).setCellValue(dto.temperaturaSolo());
-                row.createCell(9).setCellValue(dto.umidadeAmbiente());
-                row.createCell(10).setCellValue(dto.umidadeSolo());
-                row.createCell(11).setCellValue(dto.phSolo());
-                row.createCell(12).setCellValue(dto.indiceUV());
-                row.createCell(13).setCellValue(dto.dataAtualizacao().toString());
+                row.createCell(0).setCellValue(dto.fazendaNome());
+                row.createCell(1).setCellValue(dto.especieNome());
+                row.createCell(2).setCellValue(dto.areaPlantada());
+                row.createCell(3).setCellValue(dto.dataPlantio().toString());
+                row.createCell(4).setCellValue(dto.custoEsperado());
+                row.createCell(5).setCellValue(dto.status().toString());
+                row.createCell(6).setCellValue(dto.temperaturaAmbiente());
+                row.createCell(7).setCellValue(dto.temperaturaSolo());
+                row.createCell(8).setCellValue(dto.umidadeAmbiente());
+                row.createCell(9).setCellValue(dto.umidadeSolo());
+                row.createCell(10).setCellValue(dto.phSolo());
+                row.createCell(11).setCellValue(dto.indiceUV());
+                row.createCell(12).setCellValue(dto.dataAtualizacao().toString());
             }
 
             for (int i = 0; i < HEADERS.length; i++) {
@@ -68,6 +67,6 @@ public class RelatorioService {
     }
 
     public String gerarNomeArquivo(DadosRelatorioDTO dadosRelatorio) {
-        return "lote_" + dadosRelatorio.fazendaNome() + "_" + LocalDate.now() + ".xlsx";
+        return dadosRelatorio.fazendaNome() + "_" + LocalDate.now() + ".xlsx";
     }
 }

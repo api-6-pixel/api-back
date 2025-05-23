@@ -6,7 +6,6 @@ import br.gov.sp.cps.api.pixel.core.domain.entity.ChaveUsuario;
 import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;
 import br.gov.sp.cps.api.pixel.core.domain.repository.AtualizacaoPlantioRepository;
 import br.gov.sp.cps.api.pixel.core.domain.repository.ChaveUsuarioRepository;
-import br.gov.sp.cps.api.pixel.core.domain.repository.CriptografiaRepository;
 import br.gov.sp.cps.api.pixel.core.domain.repository.UsuarioRepository;
 import br.gov.sp.cps.api.pixel.core.service.RelatorioService;
 import jakarta.transaction.Transactional;
@@ -14,21 +13,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class GerarRelatorioUC {
 
-    private final RelatorioService relatorioService;
     private final UsuarioRepository usuarioRepository;
     private final AtualizacaoPlantioRepository atualizacaoPlantioRepository;
-    private final CriptografiaRepository criptografiaRepository;
     private final ChaveUsuarioRepository chaveUsuarioRepository;
+    private final RelatorioService relatorioService;
 
     @Transactional
     public RelatorioDTO executar(Long idUsuario, Long idPlantacao) throws IOException {
@@ -40,21 +35,10 @@ public class GerarRelatorioUC {
             throw new RuntimeException("Chave do usuário não encontrada para o ID informado.");
         }
 
-        byte[] decodedKey = Base64.getDecoder().decode(chaveUsuario.getChave());
-        SecretKey secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-
-        Usuario usuarioDescriptografado;
-        try {
-            usuarioDescriptografado = (Usuario) criptografiaRepository.getObjectDescriptografado(usuario, secretKey);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao descriptografar os dados do usuário.", e);
-        }
-
-        String nomeUsuario = usuarioDescriptografado.getNome();
-
         var plantacaoUsuario = usuario.getPlantacao().stream()
                 .filter(p -> p.getId().equals(idPlantacao))
                 .findFirst();
+
         if (plantacaoUsuario.isEmpty()) {
             throw new RuntimeException("Plantação não encontrada para o usuário informado.");
         }
@@ -63,7 +47,6 @@ public class GerarRelatorioUC {
 
         List<DadosRelatorioDTO> dadosRelatorio = atualizacaoPlantioRepository.buscarPorPlantacao(plantacao).stream()
                 .map(atualizacao -> new DadosRelatorioDTO(
-                        nomeUsuario,
                         plantacao.getFazendaNome(),
                         plantacao.getEspecieNome(),
                         plantacao.getAreaPlantada(),
@@ -84,8 +67,8 @@ public class GerarRelatorioUC {
         }
 
         InputStreamResource relatorio = RelatorioService.exportarDadosLoteUsuario(dadosRelatorio);
-        String nomeArquivo = relatorioService.gerarNomeArquivo(dadosRelatorio.get(1));
+        String nomeRelatorio = relatorioService.gerarNomeArquivo(dadosRelatorio.getFirst());
 
-        return new RelatorioDTO(relatorio, nomeArquivo);
+        return new RelatorioDTO(relatorio, nomeRelatorio);
     }
 }

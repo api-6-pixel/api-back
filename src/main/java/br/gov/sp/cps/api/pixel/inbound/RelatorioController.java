@@ -1,5 +1,6 @@
 package br.gov.sp.cps.api.pixel.inbound;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.DadosRelatorioDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.RelatorioDTO;
 import br.gov.sp.cps.api.pixel.core.usecase.GerarRelatorioUC;
 import lombok.RequiredArgsConstructor;
@@ -24,19 +25,13 @@ public class RelatorioController {
             @PathVariable Long idUsuario,
             @PathVariable Long idPlantacao) {
         try {
-            System.out.println("Usuário: " + idUsuario + ", Plantação: " + idPlantacao);
-            RelatorioDTO relatorioGerado = gerarRelatorioUC.executar(idUsuario, idPlantacao);
-
+            RelatorioDTO relatorio = gerarRelatorioUC.executar(idUsuario, idPlantacao);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + relatorioGerado.nomeArquivo() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + relatorio.nomeArquivo())
                     .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
-                    .body(relatorioGerado.arquivo());
+                    .body(relatorio.arquivo());
         } catch (IOException e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
         }
     }
 }
