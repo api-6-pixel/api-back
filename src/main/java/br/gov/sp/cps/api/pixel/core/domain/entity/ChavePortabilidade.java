@@ -38,17 +38,17 @@ public class ChavePortabilidade {
     @Column(name = "portabilidade_lib_chave_publica", nullable = false, length = 5000)
     private String libChavePublica;
 
-    @Column(name = "portabilidade_tempo_expiracao", nullable = false)
+    @Column(name = "portabilidade_tempo_expiracao", nullable = true)
     private LocalDateTime tempoExp; 
 
-    @Column(name = "portabilidade_hash", nullable = false)
+    @Column(name = "portabilidade_hash", nullable = true)
     private String hashConfirmacao; 
 
-    @Column(name = "portabilidade_autenticado", nullable = true)
-    private Boolean autenticado; 
+    @Column(name = "portabilidade_autenticado", nullable = false)
+    private Boolean autenticado = false; 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = true)
     private Usuario usuario; 
 
 

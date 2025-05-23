@@ -32,8 +32,9 @@ public class ConfiguracaoSeguranca {
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/historico/ativo").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/historico/aceite").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/portabilidade/getuser").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/portabilidade").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/portabilidade/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/portabilidade/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(filtroSeguranca, UsernamePasswordAuthenticationFilter.class)
                 .build();

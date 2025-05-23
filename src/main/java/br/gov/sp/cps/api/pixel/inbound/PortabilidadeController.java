@@ -1,5 +1,7 @@
 package br.gov.sp.cps.api.pixel.inbound;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.command.AutorizarPortabilidadeCommand;
+import br.gov.sp.cps.api.pixel.core.usecase.AutorizarPortabilidadeUC;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import br.gov.sp.cps.api.pixel.core.usecase.ObterUsuarioUC;
 public class PortabilidadeController {
     private final CriarChavePortabilidadeUC criarChavePortabilidadeUC;
     private final ObterUsuarioUC obterUsuarioUC;
+    private final AutorizarPortabilidadeUC autorizarUsuarioUC;
 
     @PostMapping()
     public ResponseEntity<CriarChavePortabilidadeDTO> criarChavePortabilidade(@RequestBody PortabilidadeCriarChaveCommand command) throws Exception{
@@ -33,11 +36,9 @@ public class PortabilidadeController {
         return ResponseEntity.ok(chave);
     }
 
-    //@PutMapping()
-    //public ResponseEntity<CriarChavePortabilidadeDTO> autorizarPortabilidade(@RequestBody PortabilidadeCriarChaveCommand command) throws Exception{
-        //CriarChavePortabilidadeDTO chave = criarChavePortabilidadeUC.executar(command);
-        //return ResponseEntity.ok(chave);
-    //}
-
-
+    @PutMapping("/authorize")
+    public ResponseEntity autorizarPortabilidade(@RequestBody AutorizarPortabilidadeCommand command) throws Exception{
+        autorizarUsuarioUC.executar(command);
+        return ResponseEntity.ok("Autorizado com Sucesso");
+    }
 }

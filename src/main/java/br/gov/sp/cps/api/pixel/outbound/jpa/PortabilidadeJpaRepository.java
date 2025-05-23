@@ -14,4 +14,11 @@ public interface PortabilidadeJpaRepository extends JpaRepository<ChavePortabili
   default Optional<ChavePortabilidade> buscarPorId(Long id) {
         return findById(id);
     }
+
+  default ChavePortabilidade buscarPorHash(String hash) {
+        return findByHashConfirmacao(hash);
+    }
+
+
+    ChavePortabilidade findByHashConfirmacao(String hash);
 }

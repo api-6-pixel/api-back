@@ -5,5 +5,4 @@ import lombok.Data;
 @Data
 public class PortabilidadeCriarChaveCommand {
     private String chave;
-    private LocalDateTime tempoExpiracao; 
 }

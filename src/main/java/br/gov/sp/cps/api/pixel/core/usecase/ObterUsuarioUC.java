@@ -1,4 +1,6 @@
 package br.gov.sp.cps.api.pixel.core.usecase;
+import br.gov.sp.cps.api.pixel.core.domain.repository.UsuarioRepository;
+import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
@@ -6,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.spec.RSAPublicKeySpec;
 import java.time.LocalDateTime;
 import java.util.Base64;
-
+ 
 import javax.crypto.Cipher;
 
 import java.security.*;
@@ -32,30 +34,16 @@ import org.w3c.dom.Document;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ObterUsuarioUC {
     
     private final CarregarUsuarioUC usuarioUc;
     private final PortabilidadeRepository portabilidadeRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    //Usuario deveria ser pego do auth e aqui nao deveria ta nada
     public PortabilidadeDTO executar (ObterUsuarioIDCommand command) throws Exception{
         ChavePortabilidade chave = portabilidadeRepository.buscarPorId(command.getClientID())
         .orElseThrow(() -> new RuntimeException("Nenhuma chave encontrada para o ID informado."));
-
-        if (!chave.getAutenticado()) {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(chave.getUsuario().getEmail().getBytes());
-            String encoded = Base64.getEncoder().encodeToString(hash);
-            chave.setHashConfirmacao(encoded);
-            portabilidadeRepository.salvar(chave);
-            //Notificar usuario
-            return new PortabilidadeDTO("Solicitado autorizacao para o usuario", null, null);
-        } 
-        
-        LocalDateTime agora = LocalDateTime.now();
-        if (agora.isAfter(chave.getTempoExp())) {
-            return new PortabilidadeDTO("Chave expirada", null, null);
-        } 
 
         PrivateKey chavePrivada = getChavePrivadaDeTexto(chave.getMinhaChavePrivada());
         byte[] key = descriptografar(command.getAesKey(), chavePrivada);
@@ -64,6 +52,28 @@ public class ObterUsuarioUC {
         Cipher cipherDec = createAESCipher(key, iv, Cipher.DECRYPT_MODE);
         byte[] decryptedBytes = cipherDec.doFinal(Base64.getDecoder().decode(command.getUsuarioID()));
         String usuarioID = new String(decryptedBytes, StandardCharsets.UTF_8);
+
+         if (!chave.getAutenticado()) {
+            var usuario = usuarioRepository.carregar(Long.parseLong(usuarioID));
+
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(usuarioID.getBytes());
+            String encoded = Base64.getEncoder().encodeToString(hash);
+            chave.setHashConfirmacao(encoded);
+            chave.setUsuario(usuario.get());
+            chave.setTempoExp(command.getTempoExpiracao());
+            portabilidadeRepository.salvar(chave);
+            return new PortabilidadeDTO("Solicitado autorizacao para o usuario", null, null);
+        }     
+
+        if (chave.getUsuario().getId() != Long.parseLong(usuarioID)) {
+            throw new Exception("");
+        } 
+
+        LocalDateTime agora = LocalDateTime.now();
+        if (agora.isAfter(chave.getTempoExp())) {
+            return new PortabilidadeDTO("Chave expirada", null, null);
+        } 
         
         UsuarioDTO usuario = usuarioUc.executar(Long.parseLong(usuarioID));
         ObjectMapper objectMapper = new ObjectMapper();
