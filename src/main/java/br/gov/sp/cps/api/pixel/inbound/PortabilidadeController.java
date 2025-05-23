@@ -1,6 +1,8 @@
 package br.gov.sp.cps.api.pixel.inbound;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.PortabilidadeLoginDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.AutorizarPortabilidadeCommand;
+import br.gov.sp.cps.api.pixel.core.domain.dto.command.PortabilidadeLoginCommand;
 import br.gov.sp.cps.api.pixel.core.usecase.AutorizarPortabilidadeUC;
 import lombok.RequiredArgsConstructor;
 
@@ -13,6 +15,7 @@ import br.gov.sp.cps.api.pixel.core.domain.dto.UsuarioDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.ObterUsuarioIDCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.PortabilidadeCriarChaveCommand;
 import br.gov.sp.cps.api.pixel.core.usecase.CriarChavePortabilidadeUC;
+import br.gov.sp.cps.api.pixel.core.usecase.PortabilidadeLoginUC;
 import br.gov.sp.cps.api.pixel.core.usecase.ObterUsuarioUC;
 
 @RestController
@@ -23,6 +26,13 @@ public class PortabilidadeController {
     private final CriarChavePortabilidadeUC criarChavePortabilidadeUC;
     private final ObterUsuarioUC obterUsuarioUC;
     private final AutorizarPortabilidadeUC autorizarUsuarioUC;
+    private final PortabilidadeLoginUC loginUC;
+
+    @PostMapping("/auth")
+    public ResponseEntity<PortabilidadeLoginDTO> login(@RequestBody PortabilidadeLoginCommand command) throws Exception{
+        var chave = loginUC.executar(command);
+        return ResponseEntity.ok(chave);
+    }
 
     @PostMapping()
     public ResponseEntity<CriarChavePortabilidadeDTO> criarChavePortabilidade(@RequestBody PortabilidadeCriarChaveCommand command) throws Exception{
