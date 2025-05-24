@@ -42,9 +42,7 @@ public class CarregarUsuariosUC {
                 } catch (Exception e) {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao descriptografar dados de um usuário.");
                 }
-            }  else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Chave do usuário não encontrada ou inválida.");
-            }
+            }  
         }
 
         return usuariosDescriptografados;
