@@ -3,6 +3,7 @@ package br.gov.sp.cps.api.pixel.core.domain.entity;
 import br.gov.sp.cps.api.pixel.core.domain.dto.PlantacaoDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.AlterarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarUsuarioCommand;
+import br.gov.sp.cps.api.pixel.core.domain.enumeration.FuncaoUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static br.gov.sp.cps.api.pixel.core.domain.enumeration.FuncaoUsuario.ADMIN;
+import static br.gov.sp.cps.api.pixel.core.domain.enumeration.FuncaoUsuario.USUARIO;
+import static org.hibernate.cfg.JdbcSettings.USER;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,6 +44,9 @@ public class Usuario implements UserDetails {
     @Column(name = "usuario_senha", nullable = false)
     private String senha;
 
+    @Column(name = "usuario_username", nullable = false)
+    private String nomeUsuario;
+
     @Column(name = "usuario_documento", nullable = false)
     private String documento;
 
@@ -51,16 +59,22 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Plantacao> plantacao;
 
+   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ChavePortabilidade> chavePortabilidade;
+
+
     public static Usuario toEntity(CadastrarUsuarioCommand command){
         Usuario usuario = new Usuario();
         usuario.setNome(command.getNome());
         usuario.setEmail(command.getEmail());
         usuario.setSenha(command.getSenha());
+        usuario.setNomeUsuario(command.getNomeUsuario());
         usuario.setDocumento(command.getDocumento());
         usuario.setDataCriacao(LocalDateTime.now());
         usuario.setFuncao(command.getFuncao());
         return usuario;
     }
+
     public static Usuario toEntity(AlterarUsuarioCommand command) {
         Usuario usuario = new Usuario();
         usuario.setId(command.getId());
@@ -86,10 +100,20 @@ public class Usuario implements UserDetails {
         }
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.funcao != null) {
-            return List.of(new SimpleGrantedAuthority("USUARIO"));
+            return switch (funcao.toUpperCase()) {
+                case "ADMIN" -> List.of(
+                        new SimpleGrantedAuthority("ROLE_ADMIN"),
+                        new SimpleGrantedAuthority("ROLE_USUARIO")
+                );
+                case "USUARIO" -> List.of(
+                        new SimpleGrantedAuthority("ROLE_USUARIO")
+                );
+                default -> List.of();
+            };
         }
         return List.of();
     }
