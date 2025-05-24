@@ -1,5 +1,4 @@
 package br.gov.sp.cps.api.pixel.core.service;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -32,11 +31,14 @@ public class ConfiguracaoSeguranca {
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/historico/ativo").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/historico/aceite").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/portabilidade/auth").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/portabilidade/authorize").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/usuarios/**").permitAll()
                         //.requestMatchers(HttpMethod.GET, "/api/usuarios/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(filtroSeguranca, UsernamePasswordAuthenticationFilter.class)
-                .build();    }
+                .build();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

@@ -15,6 +15,8 @@ public interface UsuarioRepository {
 
     Usuario buscarPorNomeUsuario(String nomeUsuario);
 
+    Usuario buscarPorEmail(String nomeUsuario);
+
     List<Usuario> buscarTodos();
 
 }

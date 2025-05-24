@@ -1,5 +1,6 @@
 package br.gov.sp.cps.api.pixel.core.service;
 
+import br.gov.sp.cps.api.pixel.core.domain.entity.PortabilidadeAcessos;
 import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -24,6 +25,20 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("pixel")
                     .withSubject(usuario.getEmail())
+                    .withExpiresAt(definirDataExpiracao())
+                    .sign(algoritmo);
+        } catch (JWTCreationException exception) {
+            throw new RuntimeException("Erro enquanto gera o token", exception);
+        }
+    }
+
+    public String gerarToken(PortabilidadeAcessos acessos){
+        try{
+            Algorithm algoritmo = Algorithm.HMAC256(segredo);
+            return JWT.create()
+                    .withIssuer("pixel")
+                    .withSubject(acessos.getClientId())
+                    .withSubject(acessos.getClientSecret())
                     .withExpiresAt(definirDataExpiracao())
                     .sign(algoritmo);
         } catch (JWTCreationException exception) {
