@@ -27,7 +27,7 @@ public class AutorizarPortabilidadeUC {
     private final PortabilidadeRepository portabilidadeRepository;
     
     public void executar(AutorizarPortabilidadeCommand command) throws Exception {
-        var chave = portabilidadeRepository.buscarPorHash(URLDecoder.decode(command.getHashConfirmacao(), StandardCharsets.UTF_8));
+        var chave = portabilidadeRepository.buscarPorHash(command.getHashConfirmacao());
         chave.setAutenticado(command.getAceito());
     }
 }

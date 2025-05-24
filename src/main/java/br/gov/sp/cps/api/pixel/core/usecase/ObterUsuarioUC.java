@@ -1,5 +1,7 @@
 package br.gov.sp.cps.api.pixel.core.usecase;
 import br.gov.sp.cps.api.pixel.core.domain.repository.UsuarioRepository;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.ByteArrayInputStream;
@@ -57,9 +59,9 @@ public class ObterUsuarioUC {
             var usuario = usuarioRepository.carregar(Long.parseLong(usuarioID));
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(usuarioID.getBytes());
+            byte[] hash = md.digest((usuarioID + LocalDateTime.now().toString()).getBytes());
             String encoded = Base64.getEncoder().encodeToString(hash);
-            chave.setHashConfirmacao(encoded);
+            chave.setHashConfirmacao(URLEncoder.encode(encoded, StandardCharsets.UTF_8));
             chave.setUsuario(usuario.get());
             chave.setTempoExp(command.getTempoExpiracao());
             portabilidadeRepository.salvar(chave);

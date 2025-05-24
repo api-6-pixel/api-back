@@ -25,6 +25,8 @@ public class PortabilidadeLoginUC{
     private final PortabilidadeAcessosRepository portabilidadeRepository;
 
     public PortabilidadeLoginDTO executar(PortabilidadeLoginCommand command) {
+        System.out.println(command.getClientId());
+        System.out.println(command.getClientSecret());
         var acesso = portabilidadeRepository.buscar(command.getClientId(),command.getClientSecret())
             .orElseThrow(() -> new RuntimeException("Client id/ Client secret invalido."));
         var token = tokenService.gerarToken(acesso);
