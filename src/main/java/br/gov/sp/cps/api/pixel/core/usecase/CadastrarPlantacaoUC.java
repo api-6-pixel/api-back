@@ -1,5 +1,6 @@
 package br.gov.sp.cps.api.pixel.core.usecase;
 
+import br.gov.sp.cps.api.pixel.core.domain.dto.AtualizacaoPlantioDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.PlantacaoDTO;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarAtualizacaoPlantioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarPlantacaoCommand;
@@ -38,10 +39,10 @@ public class CadastrarPlantacaoUC {
         Optional<Usuario> usuario = usuarioRepository.carregar(command.idUsuario());
         Plantacao plantacao = plantacaoRepository.salvar(Plantacao.toEntity(command,usuario.get()));
 
-        cadastrarAtualizacaoPlantioUC.executar(CadastrarAtualizacaoPlantioCommand
+        AtualizacaoPlantioDTO atualizacaoPlantioDTO = cadastrarAtualizacaoPlantioUC.executar(CadastrarAtualizacaoPlantioCommand
                 .toCommand(plantacao.getId(), command.fazendaNome(), command.temperaturaAmbiente(), command.temperaturaSolo(),
                         command.umidadeAmbiente(), command.umidadeSolo(), command.phSolo(), command.indiceUV(), command.custoEsperado()));
 
-        return mapper.toDTO(plantacao);
+        return mapper.toDTO(plantacao, atualizacaoPlantioDTO.id());
     }
 }

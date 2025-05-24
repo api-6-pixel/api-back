@@ -12,7 +12,7 @@ public class UsuarioMapper {
 
     public UsuarioDTO toDto(Usuario usuario) {
         List<PlantacaoDTO> plantacao = usuario.getPlantacao().stream()
-                .map(f -> new PlantacaoDTO(f.getId(),f.getFazendaNome(),f.getEspecieNome(),f.getAreaPlantada(),f.getDataPlantio(),f.getCustoEsperado(),f.getStatus()))
+                .map(f -> new PlantacaoDTO(f.getId(),f.getFazendaNome(),f.getEspecieNome(),f.getAreaPlantada(),f.getDataPlantio(),f.getCustoEsperado(),f.getStatus(), null))
                 .toList();
         return new UsuarioDTO(
                 usuario.getId(),
