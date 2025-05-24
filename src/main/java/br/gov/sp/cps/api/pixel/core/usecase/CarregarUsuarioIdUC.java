@@ -18,7 +18,7 @@ import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
-public class CarregarUsuarioUC {
+public class CarregarUsuarioIdUC {
 
     private final UsuarioRepository usuarioRepository;
     private final CriptografiaRepository criptografiaRepository;
@@ -43,4 +43,6 @@ public class CarregarUsuarioUC {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao descriptografar os dados do usuário.");
         }
     }
+
+
 }

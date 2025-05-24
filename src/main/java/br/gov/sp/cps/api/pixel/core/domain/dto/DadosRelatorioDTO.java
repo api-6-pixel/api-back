@@ -1,17 +1,22 @@
 package br.gov.sp.cps.api.pixel.core.domain.dto;
 
 import br.gov.sp.cps.api.pixel.core.domain.enumeration.StatusPlantacao;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-public record PlantacaoDTO(
-        Long id,
+public record DadosRelatorioDTO(
         String fazendaNome,
         String especieNome,
         Double areaPlantada,
-        LocalDateTime dataPlantio,
         Double custoEsperado,
         StatusPlantacao status,
-        Long idAtualizacao) {
+        LocalDateTime dataPlantio,
+        Double temperaturaAmbiente,
+        Double temperaturaSolo,
+        Double umidadeAmbiente,
+        Double umidadeSolo,
+        Double phSolo,
+        Double indiceUV,
+        LocalDateTime dataAtualizacao
+) {
 }
