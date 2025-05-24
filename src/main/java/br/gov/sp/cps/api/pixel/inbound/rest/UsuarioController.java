@@ -5,17 +5,14 @@ import br.gov.sp.cps.api.pixel.core.domain.dto.command.AlterarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.CadastrarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.dto.command.DeletarUsuarioCommand;
 import br.gov.sp.cps.api.pixel.core.domain.entity.Usuario;
-import br.gov.sp.cps.api.pixel.core.usecase.AlterarUsuarioUC;
-import br.gov.sp.cps.api.pixel.core.usecase.CadastrarUsuarioUC;
-import br.gov.sp.cps.api.pixel.core.usecase.CarregarUsuarioUC;
-import br.gov.sp.cps.api.pixel.core.usecase.DeletarUsuarioUC;
+import br.gov.sp.cps.api.pixel.core.usecase.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -25,7 +22,8 @@ public class UsuarioController {
 
     private final CadastrarUsuarioUC cadastrarUsuarioUC;
     private final DeletarUsuarioUC deletarUsuarioUC;
-    private final CarregarUsuarioUC carregarUsuarioUC;
+    private final CarregarUsuarioIdUC carregarUsuarioUC;
+    private final CarregarUsuariosUC carregarUsuariosUC;
     private final AlterarUsuarioUC alterarUsuarioUC;
 
     @PostMapping
@@ -42,6 +40,12 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO>  obterUsuario(@PathVariable Long idUsuario) {
         UsuarioDTO usuario = carregarUsuarioUC.executar(idUsuario);
         return ResponseEntity.ok(usuario);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioDTO>> obterTodosUsuarios() {
+        List<UsuarioDTO> usuarios = carregarUsuariosUC.executarTodos();
+        return ResponseEntity.ok(usuarios);
     }
 
     @PutMapping("/{idUsuario}")
