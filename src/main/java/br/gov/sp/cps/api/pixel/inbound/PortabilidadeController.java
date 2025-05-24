@@ -46,9 +46,10 @@ public class PortabilidadeController {
         return ResponseEntity.ok(chave);
     }
 
-    @PutMapping("/authorize")
-    public ResponseEntity autorizarPortabilidade(@RequestBody AutorizarPortabilidadeCommand command) throws Exception{
-        autorizarUsuarioUC.executar(command);
+    @GetMapping("/authorize")
+    public ResponseEntity autorizarPortabilidade(@RequestParam String token) throws Exception{
+        System.out.println("Token: " + token);
+        autorizarUsuarioUC.executar(new AutorizarPortabilidadeCommand(token));
         return ResponseEntity.ok("Autorizado com Sucesso");
     }
 }

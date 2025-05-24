@@ -10,4 +10,9 @@ import java.util.List;
 public class AutorizarPortabilidadeCommand {
     String hashConfirmacao;
     Boolean aceito;
+
+    public AutorizarPortabilidadeCommand(String hashConfirmacao) {
+        this.hashConfirmacao = hashConfirmacao;
+        this.aceito = true ;
+    }
 }
