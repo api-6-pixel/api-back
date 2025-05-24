@@ -39,7 +39,7 @@ import org.w3c.dom.Document;
 @Transactional
 public class ObterUsuarioUC {
     
-    private final CarregarUsuarioUC usuarioUc;
+    private final CarregarUsuarioIdUC usuarioUc;
     private final PortabilidadeRepository portabilidadeRepository;
     private final UsuarioRepository usuarioRepository;
 

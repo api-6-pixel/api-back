@@ -28,7 +28,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class AutorizarPortabilidadeUC {
     private final PortabilidadeRepository portabilidadeRepository;
-    private final CarregarUsuarioUC usuarioUc;
+    private final CarregarUsuarioIdUC usuarioUc;
  
     public void executar(AutorizarPortabilidadeCommand command) throws Exception {
         var chave = portabilidadeRepository.buscarPorHash(URLEncoder.encode(command.getHashConfirmacao()));
