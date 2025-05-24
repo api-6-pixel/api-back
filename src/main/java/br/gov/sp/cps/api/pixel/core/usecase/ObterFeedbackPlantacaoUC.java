@@ -36,7 +36,10 @@ public class ObterFeedbackPlantacaoUC extends ClassificadorPlantacaoService {
                     propriedadePlantacao.getRuimMinimo(), propriedadePlantacao.getAceitavelMinimo(),
                     propriedadePlantacao.getAceitavelMaximo(), propriedadePlantacao.getRuimMaximo());
             feedbackPlantacaoDTO.setPropriedade(propriedadePlantacao.getDescricao());
-                    feedbackPlantacaoDTO.setMelhorar(condicaoPlantacao != CondicaoPlantacao.IDEAL);
+            feedbackPlantacaoDTO.setMelhorar(condicaoPlantacao != CondicaoPlantacao.IDEAL);
+            feedbackPlantacaoDTO.setValorAtual((double) propriedade.get(propriedadePlantacao));
+            feedbackPlantacaoDTO.setStatus(condicaoPlantacao.name());
+
             return feedbackPlantacaoDTO;
         }).collect(Collectors.toList());
     }

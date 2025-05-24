@@ -7,4 +7,6 @@ public class FeedbackPlantacaoDTO {
 
     private String propriedade;
     private boolean melhorar;
+    private double valorAtual;
+    private String status;
 }
