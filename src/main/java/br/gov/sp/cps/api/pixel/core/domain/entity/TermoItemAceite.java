@@ -23,5 +23,7 @@ public class TermoItemAceite {
     @JoinColumn(name = "termo_item_codigo", nullable = false)
     private TermoItem termoItem;
 
+    
+
     private boolean aceito;
 }

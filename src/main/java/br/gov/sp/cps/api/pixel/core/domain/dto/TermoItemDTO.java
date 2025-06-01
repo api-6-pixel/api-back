@@ -1,6 +1,7 @@
 package br.gov.sp.cps.api.pixel.core.domain.dto;
 
 public record TermoItemDTO(
+    Long codigo,
     Long termoCodigo,
     String titulo,
     String descricao,

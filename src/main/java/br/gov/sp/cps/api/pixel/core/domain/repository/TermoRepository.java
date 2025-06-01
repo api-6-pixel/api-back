@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TermoRepository extends JpaRepository<Termo, Long> {
     Termo findTopByOrderByCodigoDesc(); 
+    
 }

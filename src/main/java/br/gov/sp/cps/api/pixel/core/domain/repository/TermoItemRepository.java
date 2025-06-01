@@ -11,4 +11,7 @@ public interface TermoItemRepository extends JpaRepository<TermoItem, Long> {
 
     // Retorna todos os itens vinculados a um termo específico
     List<TermoItem> findByTermoCodigo(Long termoCodigo);
+
+        TermoItem findTopByTermoCodigoOrderByCodigoDesc(Long termoCodigo);
+
 }

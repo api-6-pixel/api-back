@@ -1,7 +1,10 @@
 package br.gov.sp.cps.api.pixel.core.service;
 
+import br.gov.sp.cps.api.pixel.core.domain.entity.Termo;
 import br.gov.sp.cps.api.pixel.core.domain.entity.TermoItemAceiteUsuarioHistorico;
 import br.gov.sp.cps.api.pixel.core.domain.repository.TermoItemAceiteUsuarioHistoricoRepository;
+import br.gov.sp.cps.api.pixel.core.domain.repository.TermoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,12 @@ public class TermoItemAceiteUsuarioHistoricoService {
     @Autowired
     private TermoItemAceiteUsuarioHistoricoRepository historicoRepository;
 
+    @Autowired
+    private TermoRepository termoRepository;
+
+    public Optional<Termo> findLastTermo() {
+        return Optional.ofNullable(termoRepository.findTopByOrderByCodigoDesc());
+    }
 
     public Optional<TermoItemAceiteUsuarioHistorico> findLastAceiteByUsuario(Long usuarioCodigo) {
         return historicoRepository.findTopByUsuario_IdOrderByDataAceiteDesc(usuarioCodigo);

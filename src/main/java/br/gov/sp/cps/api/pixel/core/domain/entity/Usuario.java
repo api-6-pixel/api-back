@@ -62,6 +62,9 @@ public class Usuario implements UserDetails {
    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ChavePortabilidade> chavePortabilidade;
 
+     public Usuario(Long id) {
+        this.id = id;
+    }
 
     public static Usuario toEntity(CadastrarUsuarioCommand command){
         Usuario usuario = new Usuario();

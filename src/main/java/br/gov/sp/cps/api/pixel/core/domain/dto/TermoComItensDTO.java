@@ -16,7 +16,7 @@ public class TermoComItensDTO {
     private Long termoId;
     private String descricao;
     
-    private boolean aceito;  // Novo campo para indicar se o termo foi aceito
+    private boolean aceito;  
 
     private List<ItemDTO> obrigatorios;
     private List<ItemDTO> opcionais;
